@@ -19,4 +19,13 @@ public abstract class UserModel {
     public int getId() {
         return id;
     }
+    public String getPassword() {
+        return password;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

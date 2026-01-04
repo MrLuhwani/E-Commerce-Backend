@@ -3,6 +3,7 @@ package dev.luhwani.eCommerceSystem;
 import java.util.Scanner;
 
 import dev.luhwani.eCommerceSystem.services.UserServices;
+import dev.luhwani.eCommerceSystem.userModels.Customer;
 
 public class UserApp {
     public static void main(String[] args) throws Exception {
@@ -19,7 +20,10 @@ public class UserApp {
                 String response = scanner.nextLine();
                 switch (response) {
                     case "1" -> System.out.println("User login");
-                    case "2" -> UserServices.createAcct();
+                    case "2" -> {
+                        Customer customer = UserServices.createAcct();
+                        UserServices.menu(customer);
+                    }
                     case "3" -> {
                         running = false;
                         System.out.println("Exitting...");
