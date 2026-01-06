@@ -88,6 +88,7 @@ public class UserServices {
             response = scanner.nextLine();
             switch (response) {
                 case "1" -> {
+                    //would call product services here
                 }
                 case "2" -> {
                     /*

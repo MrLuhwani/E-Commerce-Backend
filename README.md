@@ -9,7 +9,7 @@ User Management:
 - Login authentication (username & password)
 - Change account password
 - Ability to add products to cart
-- Persistence is cart logic
+- Persistence in cart logic
 
 Admin Tools
 - Addition and removal of products
@@ -34,6 +34,11 @@ ECommerceBackend/
 │               │   └── Cart.class  
 │               │   └── CartItem.class  
 │               │  
+|               ├── product/  
+│               │   └── Category.class  
+│               │   └── Product.class  
+│               │   └── Variant.class  
+│               │  
 │               ├── services/  
 │               │   └── AdminServices.class  
 │               │   └── UserServices.class  
@@ -54,6 +59,11 @@ ECommerceBackend/
 │               ├── cartModel/  
 │               │   └── Cart.java  
 │               │   └── CartItem.java  
+│               │  
+|               ├── product/  
+│               │   └── Category.java  
+│               │   └── Product.java  
+│               │   └── Variant.java  
 │               │  
 │               ├── services/  
 │               │   └── AdminServices.java  
