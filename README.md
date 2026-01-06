@@ -3,11 +3,19 @@ A simple command-line E-Commerce system built in Java.
 This project is still in it's early phase, so the major focus is on applying core OOP principles such as abstraction and inheritance.
 ---
 
-## Planned Features
+## Features
 User Management:
 - Customers create accounts
-- Login authentication (username & password)
 - Change account password
+
+Product Management:
+- Products have different categories
+- Variants of different products
+---
+
+## Planned Features
+User Management:
+- Login authentication (username & password)
 - Ability to add products to cart
 - Persistence in cart logic
 
@@ -18,8 +26,6 @@ Admin Tools
 
 Product Management:
 - Products can be stored in cart by users for later
-- Products have different categories
-- Variants of different products
 ---
 
 ## Project Structure

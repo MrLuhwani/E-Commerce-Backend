@@ -2,7 +2,7 @@ package dev.luhwani.eCommerceSystem.product;
 
 public class Category {
 
-    private static int count = 0;
+    private static int counter = 0;
     private String name;
     private int id;
     private Product product;
@@ -15,5 +15,13 @@ public class Category {
     
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -30,4 +30,20 @@ public class Product {
         this.variants.add(variant);
         variant.setProduct(this);
     }
+
+    public List<Variant> getVariants() {
+        return variants;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

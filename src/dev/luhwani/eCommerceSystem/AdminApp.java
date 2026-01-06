@@ -29,10 +29,3 @@ public class AdminApp {
         }
     }
 }
-/*
- * Login
- * 
- * Create acct
- * 
- * Exit
- */

@@ -1,10 +1,17 @@
 package dev.luhwani.eCommerceSystem.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import dev.luhwani.eCommerceSystem.product.Category;
+import dev.luhwani.eCommerceSystem.product.Product;
+import dev.luhwani.eCommerceSystem.product.Variant;
 import dev.luhwani.eCommerceSystem.userModels.Customer;
 
 public class UserServices {
@@ -87,14 +94,8 @@ public class UserServices {
             System.out.print("Response: ");
             response = scanner.nextLine();
             switch (response) {
-                case "1" -> {
-                    //would call product services here
-                }
-                case "2" -> {
-                    /*
-                    user.getCart().getCartItems()...
-                     */
-                }
+                case "1" -> viewProducts();
+                case "2" -> {}
                 case "3" -> changePassword(customer);
                 case "4" -> {
                     running = false;
@@ -109,27 +110,80 @@ public class UserServices {
          * user can purchase product
          * User can add to cart
          * user can view cart
-         * user can change password
          */
     }
 
     private static void viewProducts() {
-        
+        int numOfCategories;
+        List<Product> productsInCategory;
+        if (ProductServices.categories.isEmpty()) {
+            System.out.println("No available categories");
+            return;
+        }
+        numOfCategories = ProductServices.categories.size();
+        ProductServices.printCategories();
+        boolean hasProducts = true;
+        while (true) {
+            try {
+                int choice;
+                System.out.println("Enter the number of your choice: ");
+                choice = scanner.nextInt();
+                if (choice > numOfCategories || choice < 1) {
+                    System.out.println("Invalid choice");   
+                } else {
+                    choice -=1;
+                    Category chosenCategory = ProductServices.categories.get(choice);
+                    productsInCategory = ProductServices.filterProductByCategory(chosenCategory.getId());
+                    if (Objects.isNull(productsInCategory)) {
+                        System.out.println("No product available in this category yet");
+                        hasProducts = false;
+                    }
+                    break;
+                }
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+                System.out.println("Invalid input");
+                //Now Im wondering, if the user inputs a double, what happens
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (!hasProducts) {return;}
+        List<Variant> activeVariants = new ArrayList<>();
+        int numOfVariants = 0;
+        for (Product product : productsInCategory) {
+            for (Variant variant : product.getVariants()) {
+                if (variant.getIsActive() && variant.getStock() > 0) {
+                numOfVariants += 1;
+                System.out.println("Product "+ numOfVariants+".");
+                System.out.println("_____________");
+                variant.showDetails();
+                activeVariants.add(variant);
+                }
+            }
+        }
+        while (true) {
+            try {
+                System.out.println("Enter the product you wish to buy: ");
+                int choice = scanner.nextInt();
+                //to be continued...       
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+                System.out.println("Invalid input");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }    
+        }
         /*
-        print categories
-        user enters choice
-        we call fun from productservices, passing in the user choice as an arg
-        we use a helper function to separate each instance of the choice
-        we pass them into a list
-        for each member of the list, we print their toString i.e name, price, ....
-        then they select a product, but the issue is how do we know the exact product
-        they selected hmm...
-        then we ask if they want to buy, check variants or add to cart
-        buy... we can just tell them that purchase services not available
-        for variants,... ill think about it
-        for cart, we ask them the amount of the product they wish to add
-        to cart, then we get the product id and add to users cart
-         */        
+         * for each member of the list, we print their toString i.e name, price, ....
+         * then they select a product, but the issue is how do we know the exact product
+         * they selected hmm...
+         * then we ask if they want to buy, check variants or add to cart
+         * buy... we can just tell them that purchase services not available
+         * for variants,... ill think about it
+         * for cart, we ask them the amount of the product they wish to add
+         * to cart, then we get the product id and add to users cart
+         */
     }
 
     private static boolean validEmail(String email) {

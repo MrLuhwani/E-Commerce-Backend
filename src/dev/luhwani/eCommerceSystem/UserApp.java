@@ -35,10 +35,3 @@ public class UserApp {
         }
     }
 }
-/*
- * Login
- * 
- * Create acct
- * 
- * Exit
- */
