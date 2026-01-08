@@ -43,6 +43,10 @@ public class Variant {
                 Feature: %s \n""",product.getName(),product.getDescription(),priceInNaira(),variation);
     }
 
+    public int getId() {
+        return id;
+    }
+
     public int getStock() {
         return stock;
     }

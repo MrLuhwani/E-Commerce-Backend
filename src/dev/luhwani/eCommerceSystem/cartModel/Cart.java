@@ -3,13 +3,21 @@ package dev.luhwani.eCommerceSystem.cartModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.luhwani.eCommerceSystem.userModels.Customer;
+
 public class Cart {
-    int cartId;
-    ///the purpose of this cartId is for ease of implementing persistence
-    //later on
-    List<CartItem> cartItems;
-    public Cart(int cartId) {
-        this.cartId = cartId;
-        cartItems = new ArrayList<>();
+    private int cartId;
+    private List<CartItem> cartItems = new ArrayList<>();
+    public void setCartId(Customer customer) {
+        this.cartId = customer.getId();
+    }
+    
+    public void addCartItem(CartItem cartItem) {
+        cartItems.add(cartItem);
+        cartItem.setCart(this);
+    }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
     }
 }

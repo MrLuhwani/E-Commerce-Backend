@@ -20,7 +20,6 @@ public class ProductServices {
     }
 
     static List<Product> filterProductByCategory(int categoryId) {
-        //for the argument of this function, use category ID
         List<Product> filteredProducts = new ArrayList<>();
         if (products.isEmpty()) {
             return null;
