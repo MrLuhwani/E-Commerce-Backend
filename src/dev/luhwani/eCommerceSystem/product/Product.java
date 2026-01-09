@@ -23,7 +23,6 @@ public class Product {
     
     public void addCategory(Category category) {
         this.categories.add(category);
-        category.setProduct(this);
     }
 
     public void addVariant(Variant variant) {

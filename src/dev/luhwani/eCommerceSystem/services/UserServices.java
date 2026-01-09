@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import dev.luhwani.eCommerceSystem.cartModel.Cart;
 import dev.luhwani.eCommerceSystem.userModels.Customer;
 
 public class UserServices {
@@ -23,18 +24,12 @@ public class UserServices {
             if (validEmail(email)) {break;}
             System.out.println("Invalid email");
         }
-        boolean emailFound = false;
         Customer customer = null;
-        for (Customer c : customers) { 
-            if (c.getEmail().equals(email)) {
-                customer = c;
-                emailFound = true;
-                break;
-            }
-        }
-        if (!emailFound) {
+        if (emailToCustomerMap.containsKey(email)) {
+            customer = emailToCustomerMap.get(email);
+        } else {
             System.out.println("Email not found");
-            return null;
+            return customer;
         }
         String password;
         while (true) {
@@ -62,13 +57,7 @@ public class UserServices {
                 }
                 System.out.println("Invalid email");
             }
-            boolean found = false;
-            for (String emailString : emailToCustomerMap.keySet()) {
-                if (emailString.equals(email)) {
-                    found = true;
-                }
-            }
-            if (!found) {
+            if (!emailToCustomerMap.containsKey(email)) {
                 break;
             }
             System.out.println("This email is already in use");
@@ -109,7 +98,9 @@ public class UserServices {
             System.out.println("Invalid name");
         }
         Customer customer = new Customer(firstName, lastName, email, password);
+        customer.setCart(new Cart());
         emailToCustomerMap.put(email, customer);
+        customers.add(customer);
         return customer;
     }
 
@@ -119,12 +110,12 @@ public class UserServices {
     }
 
     private static boolean validPassword(String password) {
-        Pattern passwordPattern = Pattern.compile("^(?=.*[A-Za-z0-9])(?=.*[^A-Za-z0-9\s])[^\s]{7,20}$");
+        Pattern passwordPattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[^A-Za-z0-9\\s])[^\\s]{7,20}$");
         return passwordPattern.matcher(password).matches();
     }
 
     private static boolean validName(String name) {
-        Pattern namePattern = Pattern.compile("^[A-Za-z]$");
+        Pattern namePattern = Pattern.compile("^[A-Za-z]{2,}$");
         return namePattern.matcher(name).matches();
     }
 

@@ -26,7 +26,7 @@ public class Variant {
     }
 
     double priceInNaira() {
-        return priceInKobo / 100;
+        return priceInKobo / 100.0;
         //im still using a double here though but when actual transactions come,
         //there'll be a better implementation of the kobo logic
     }

@@ -1,7 +1,5 @@
 package dev.luhwani.eCommerceSystem.cartModel;
 
-
-
 import dev.luhwani.eCommerceSystem.product.Variant;
 
 public class CartItem {

@@ -1,20 +1,24 @@
 package dev.luhwani.eCommerceSystem.product;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Category {
 
     private static int counter = 0;
     private String name;
     private int id;
-    private Product product;
+    private Set<Product> products = new HashSet<>();
     
-    public Category(String name, int id) {
+    public Category(String name) {
         counter++;
         this.id = counter;
         this.name = name;
     }
     
-    public void setProduct(Product product) {
-        this.product = product;
+    public void addProduct(Product product) {
+        this.products.add(product);
+        product.addCategory(this);
     }
 
     public String getName() {

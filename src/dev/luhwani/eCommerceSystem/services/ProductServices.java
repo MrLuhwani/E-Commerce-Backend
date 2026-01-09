@@ -43,7 +43,7 @@ public class ProductServices {
         }
         Category chosenCategory = categories.get(Integer.parseInt(choice) - 1);
         productsInCategory = filterProductByCategory(chosenCategory.getId());
-        if (productsInCategory.isEmpty() || Objects.isNull(productsInCategory)) {
+        if (productsInCategory.isEmpty()) {
             System.out.println("No available products yet");
             return;
         }
@@ -90,7 +90,10 @@ public class ProductServices {
                         """);
                         //Not good for an e commerce store
                         //I'll think of something for now
-                case "2" -> CartServices.addToCart(customer, chosenVariant);
+                case "2" -> {
+                    CartServices.addToCart(customer, chosenVariant);
+                    return;
+                }
                 default -> System.out.println("Invalid input");
             }
         }
@@ -107,7 +110,7 @@ public class ProductServices {
     private static List<Product> filterProductByCategory(int categoryId) {
         List<Product> filteredProducts = new ArrayList<>();
         if (products.isEmpty()) {
-            return null;
+            return filteredProducts;
         }
         for (Product product : products) {
             for (Category category : product.getCategories()) {
