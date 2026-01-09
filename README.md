@@ -7,25 +7,23 @@ This project is still in it's early phase, so the major focus is on applying cor
 User Management:
 - Customers create accounts
 - Change account password
+- Ability to add products to cart
+- Login authentication (username & password)
 
 Product Management:
 - Products have different categories
 - Variants of different products
+- Products can be stored in cart by users for later
 ---
 
 ## Planned Features
 User Management:
-- Login authentication (username & password)
-- Ability to add products to cart
-- Persistence in cart logic
+- Persistence in App logic
 
 Admin Tools
 - Addition and removal of products
 - Analytics of most purchased products
 - Change in price of products
-
-Product Management:
-- Products can be stored in cart by users for later
 ---
 
 ## Project Structure
@@ -47,6 +45,8 @@ ECommerceBackend/
 │               │  
 │               ├── services/  
 │               │   └── AdminServices.class  
+│               │   └── CartServices.class  
+│               │   └── ProductServices.class  
 │               │   └── UserServices.class  
 │               │  
 │               ├── userModels/  
@@ -73,6 +73,8 @@ ECommerceBackend/
 │               │  
 │               ├── services/  
 │               │   └── AdminServices.java  
+│               │   └── CartServices.java  
+│               │   └── ProductServices.java  
 │               │   └── UserServices.java  
 │               │  
 │               ├── userModels/  
