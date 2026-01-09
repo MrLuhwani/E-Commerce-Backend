@@ -11,36 +11,37 @@ import dev.luhwani.eCommerceSystem.userModels.Customer;
 public class UserApp {
 
     static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) throws Exception {
 
         boolean running = true;
-            while (running) {
-                System.out.println("""
-                        __WELCOME__
-                        Enter the number for your choice:
-                        1.Login
-                        2.Create New Acct
-                        3.Exit""");
-                System.out.print("Response: ");
-                String response = scanner.nextLine();
-                switch (response) {
-                    case "1" -> {
-                        Customer customer = UserServices.userLogin();
-                        if (!Objects.isNull(customer)) {
-                            menu(customer);
-                        }
-                    }
-                    case "2" -> {
-                        Customer customer = UserServices.createAcct();
+        while (running) {
+            System.out.println("""
+                    __WELCOME__
+                    Enter the number for your choice:
+                    1.Login
+                    2.Create New Acct
+                    3.Exit""");
+            System.out.print("Response: ");
+            String response = scanner.nextLine();
+            switch (response) {
+                case "1" -> {
+                    Customer customer = UserServices.userLogin();
+                    if (!Objects.isNull(customer)) {
                         menu(customer);
                     }
-                    case "3" -> {
-                        running = false;
-                        scanner.close();
-                        System.out.println("Exitting...");
-                    }
+                }
+                case "2" -> {
+                    Customer customer = UserServices.createAcct();
+                    menu(customer);
+                }
+                case "3" -> {
+                    running = false;
+                    scanner.close();
+                    System.out.println("Exitting...");
                 }
             }
+        }
     }
 
     public static void menu(Customer customer) {
