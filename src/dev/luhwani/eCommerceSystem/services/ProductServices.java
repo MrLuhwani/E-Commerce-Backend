@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import dev.luhwani.eCommerceSystem.product.Category;
-import dev.luhwani.eCommerceSystem.product.Product;
-import dev.luhwani.eCommerceSystem.product.Variant;
+import dev.luhwani.eCommerceSystem.productModels.Category;
+import dev.luhwani.eCommerceSystem.productModels.Product;
+import dev.luhwani.eCommerceSystem.productModels.Variant;
 import dev.luhwani.eCommerceSystem.userModels.Customer;
 
 public class ProductServices {
@@ -52,7 +52,7 @@ public class ProductServices {
             for (Variant variant : product.getVariants()) {
                 if (variant.getIsActive() && variant.getStock() > 0) {
                     numOfVariants += 1;
-                    System.out.println("Product " + numOfVariants + ".");
+                    System.out.println("product " + numOfVariants + ".");
                     System.out.println("_____________");
                     variant.showDetails();
                     activeVariants.add(variant);
@@ -78,7 +78,7 @@ public class ProductServices {
         while (true) {
             System.out.println("""
                     Enter number for your choice:
-                    1.Buy Product
+                    1.Buy product
                     2.Add to Cart
                     Response: """);
             choice = scanner.nextLine();

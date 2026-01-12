@@ -10,10 +10,15 @@ User Management:
 - Ability to add products to cart
 - Login authentication (username & password)
 
-Product Management:
-- Products have different categories
+product Management:
+- products have different categories
 - Variants of different products
-- Products can be stored in cart by users for later
+- products can be stored in cart by users for later
+
+Admin Services:
+- Register new admins
+- Admin login
+- Change admin password
 ---
 
 ## Planned Features
@@ -22,7 +27,7 @@ User Management:
 
 Admin Tools
 - Addition and removal of products
-- Analytics of most purchased products
+- Analytics of most purchased product
 - Change in price of products
 ---
 
@@ -30,33 +35,6 @@ Admin Tools
 ECommerceBackend/  
 ├── .vscode/  
 │   └── settings.json  
-├── bin/  
-│   └── dev/  
-│       └── luhwani/  
-│           └── eCommerceSystem/  
-│               ├── cartModel/  
-│               │   └── Cart.class  
-│               │   └── CartItem.class  
-│               │  
-|               ├── product/  
-│               │   └── Category.class  
-│               │   └── Product.class  
-│               │   └── Variant.class  
-│               │  
-│               ├── services/  
-│               │   └── AdminServices.class  
-│               │   └── CartServices.class  
-│               │   └── ProductServices.class  
-│               │   └── UserServices.class  
-│               │  
-│               ├── userModels/  
-│               │   └── Admin.class  
-│               │   └── Customer.class  
-│               │   └── Role.class  
-│               │   └── UserModel.class  
-│               │  
-│               ├── AdminApp.class  
-│               ├── UserApp.class  
 ├── lib/  
 ├── src/  
 │   └── dev/  
@@ -66,20 +44,26 @@ ECommerceBackend/
 │               │   └── Cart.java  
 │               │   └── CartItem.java  
 │               │  
-|               ├── product/  
-│               │   └── Category.java  
-│               │   └── Product.java  
-│               │   └── Variant.java  
+|               ├── productModels/  
+|               |   ├── categories/  
+│               │   │   └── Automotives.java  
+│               │   │   └── Computerss.java  
+│               │   │   └── Sports.java  
+│               │   ├── Category.java  
+│               │   ├── Product.java  
+│               │   ├── Variant.java  
 │               │  
 │               ├── services/  
+│               │   └── AdminProductServices.java  
 │               │   └── AdminServices.java  
 │               │   └── CartServices.java  
-│               │   └── ProductServices.java  
+│               │   └── productServices.java  
 │               │   └── UserServices.java  
 │               │  
 │               ├── userModels/  
 │               │   └── Admin.java  
 │               │   └── Customer.java  
+│               │   └── Person.java  
 │               │   └── Role.java  
 │               │   └── UserModel.java  
 │               │  

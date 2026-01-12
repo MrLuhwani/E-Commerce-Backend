@@ -1,6 +1,6 @@
 package dev.luhwani.eCommerceSystem.cartModel;
 
-import dev.luhwani.eCommerceSystem.product.Variant;
+import dev.luhwani.eCommerceSystem.productModels.Variant;
 
 public class CartItem {
     private int itemId;

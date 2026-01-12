@@ -1,4 +1,4 @@
-package dev.luhwani.eCommerceSystem.product;
+package dev.luhwani.eCommerceSystem.productModels;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,4 +28,7 @@ public class Category {
     public int getId() {
         return id;
     }
+    /*
+    
+     */
 }

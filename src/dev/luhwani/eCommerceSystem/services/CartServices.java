@@ -3,7 +3,7 @@ package dev.luhwani.eCommerceSystem.services;
 import java.util.Scanner;
 
 import dev.luhwani.eCommerceSystem.cartModel.CartItem;
-import dev.luhwani.eCommerceSystem.product.Variant;
+import dev.luhwani.eCommerceSystem.productModels.Variant;
 import dev.luhwani.eCommerceSystem.userModels.Customer;
 
 public class CartServices {
@@ -28,7 +28,7 @@ public class CartServices {
         }
         CartItem cartItem = new CartItem(chosenVariant, quantity);
         customer.getCart().addCartItem(cartItem);
-        System.out.println("Product has been added to cart");
+        System.out.println("product has been added to cart");
     }
 
     public static void viewCart(Customer customer) {
@@ -39,7 +39,7 @@ public class CartServices {
         int counter = 0;
         for (CartItem cartItem : customer.getCart().getCartItems()) {
             counter++;
-            System.out.println("Product " + counter + ".");
+            System.out.println("product " + counter + ".");
             System.out.println("___________");
             cartItem.getVariant().showDetails();
             System.out.print("Quantity: " + cartItem.getQuantity());

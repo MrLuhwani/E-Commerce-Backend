@@ -5,9 +5,9 @@ import dev.luhwani.eCommerceSystem.cartModel.Cart;
 public class Customer extends UserModel {
     private static int counter = 0;
     private Cart cart = null;
-    public Customer(String firstName, String lastName, String email, String password) {
+    public Customer(Person person, String password) {
         counter++;
-        super(firstName,lastName,email,password,Role.CUSTOMER);
+        super(person,password);
         this.id = counter;
     }
     public void setCart(Cart cart) {

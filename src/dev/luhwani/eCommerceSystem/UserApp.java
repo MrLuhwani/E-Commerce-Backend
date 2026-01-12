@@ -6,6 +6,7 @@ import java.util.Objects;
 import dev.luhwani.eCommerceSystem.services.CartServices;
 import dev.luhwani.eCommerceSystem.services.ProductServices;
 import dev.luhwani.eCommerceSystem.services.UserServices;
+import dev.luhwani.eCommerceSystem.services.Utils;
 import dev.luhwani.eCommerceSystem.userModels.Customer;
 
 public class UserApp {
@@ -44,7 +45,7 @@ public class UserApp {
         }
     }
 
-    public static void menu(Customer customer) {
+    private static void menu(Customer customer) {
         String response;
         boolean running = true;
         while (running) {
@@ -59,7 +60,11 @@ public class UserApp {
             switch (response) {
                 case "1" -> ProductServices.viewProducts(customer);
                 case "2" -> CartServices.viewCart(customer);
-                case "3" -> UserServices.changePassword(customer);
+                case "3" -> {
+                    String password = Utils.changePassword(customer);
+                    dev.luhwani.eCommerceSystem.services.UserServices.emailToCustomerMap
+                            .get(customer.getPerson().getEmail()).setPassword(password);
+                }
                 case "4" -> {
                     running = false;
                     System.out.println("Logging Out...");

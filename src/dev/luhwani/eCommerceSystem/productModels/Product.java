@@ -1,4 +1,4 @@
-package dev.luhwani.eCommerceSystem.product;
+package dev.luhwani.eCommerceSystem.productModels;
 
 import java.util.ArrayList;
 import java.util.HashSet;

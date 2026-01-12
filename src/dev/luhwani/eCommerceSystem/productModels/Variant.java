@@ -1,4 +1,4 @@
-package dev.luhwani.eCommerceSystem.product;
+package dev.luhwani.eCommerceSystem.productModels;
 
 public class Variant {
     
