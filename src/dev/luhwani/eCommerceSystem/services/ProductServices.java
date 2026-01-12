@@ -1,5 +1,7 @@
 package dev.luhwani.eCommerceSystem.services;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,6 +15,9 @@ public class ProductServices {
     
     static List<Category> categories = new ArrayList<>();
     static List<Product> products = new ArrayList<>();
+    //these are quite long names, but I don't want something confusing
+    static Map<String, Category> categoryNameToObjectMap = new HashMap<>();
+    static Map<String, Product> productNameToObjectMap = new HashMap<>();
     static Scanner scanner = new Scanner(System.in);
     
     public static void viewProducts(Customer customer) {
@@ -27,7 +32,7 @@ public class ProductServices {
         String choice;
         while (true) {
             System.out.println("Enter the number of your choice: ");
-            choice = scanner.nextLine();
+            choice = scanner.nextLine().trim();
             try {
                 if (Integer.parseInt(choice) > numOfCategories || Integer.parseInt(choice) < 1) {
                     System.out.println("Invalid choice");
@@ -61,7 +66,7 @@ public class ProductServices {
         }
         while (true) {
             System.out.println("Enter the number of the product: ");
-            choice = scanner.nextLine();
+            choice = scanner.nextLine().trim();
             try {
                 if (Integer.parseInt(choice) > activeVariants.size() || Integer.parseInt(choice) < 1) {
                     System.out.println("Invalid choice");
@@ -81,7 +86,7 @@ public class ProductServices {
                     1.Buy product
                     2.Add to Cart
                     Response: """);
-            choice = scanner.nextLine();
+            choice = scanner.nextLine().trim();
             switch (choice) {
                 case "1" -> System.out.println("""
                         Purchase feature is not available yet
@@ -98,7 +103,7 @@ public class ProductServices {
         }
     }
 
-    private static void printCategories() {
+    static void printCategories() {
         int count = 1;
         for (Category category : categories) {
             System.out.println(count + "." + category.getName());
@@ -106,7 +111,7 @@ public class ProductServices {
         }
     }
 
-    private static List<Product> filterProductByCategory(int categoryId) {
+    static List<Product> filterProductByCategory(int categoryId) {
         List<Product> filteredProducts = new ArrayList<>();
         if (products.isEmpty()) {
             return filteredProducts;
@@ -120,5 +125,5 @@ public class ProductServices {
         }
         return filteredProducts;
     }
-    
+
 }

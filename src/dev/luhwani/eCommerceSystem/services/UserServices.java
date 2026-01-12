@@ -20,7 +20,7 @@ public class UserServices {
         String email;
         while(true) {
             System.out.print("Enter your email: ");
-            email = scanner.nextLine();
+            email = scanner.nextLine().trim();
             if (Utils.validEmail(email)) {break;}
             System.out.println("Invalid email");
         }
@@ -51,7 +51,7 @@ public class UserServices {
         while (true) {
             while (true) {
                 System.out.print("Enter your email: ");
-                email = scanner.nextLine();
+                email = scanner.nextLine().trim();
                 if (Utils.validEmail(email)) {
                     break;
                 }
@@ -82,7 +82,7 @@ public class UserServices {
         String firstName;
         while (true) {
             System.out.print("Enter your first name: ");
-            firstName = scanner.nextLine();
+            firstName = scanner.nextLine().trim();
             if (Utils.validName(firstName)) {
                 break;
             }
@@ -91,7 +91,7 @@ public class UserServices {
         String lastName;
         while (true) {
             System.out.print("Enter your last name: ");
-            lastName = scanner.nextLine();
+            lastName = scanner.nextLine().trim();
             if (Utils.validName(lastName)) {
                 break;
             }

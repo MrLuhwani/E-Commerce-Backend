@@ -38,7 +38,7 @@ public class Product {
         return categories;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 

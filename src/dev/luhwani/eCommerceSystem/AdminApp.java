@@ -3,6 +3,7 @@ package dev.luhwani.eCommerceSystem;
 import java.util.Objects;
 import java.util.Scanner;
 
+import dev.luhwani.eCommerceSystem.services.AdminProductServices;
 import dev.luhwani.eCommerceSystem.services.AdminServices;
 import dev.luhwani.eCommerceSystem.userModels.Admin;
 
@@ -20,7 +21,7 @@ public class AdminApp {
                     2.Register new admin user
                     3.Exit""");
             System.out.print("Response: ");
-            String response = scanner.nextLine();
+            String response = scanner.nextLine().trim();
             switch (response) {
                 case "1" -> {
                     Admin admin = AdminServices.adminLogin();
@@ -57,11 +58,11 @@ public class AdminApp {
                     6.Permanent product deletion
                     7.Log Out""");
             System.out.print("Response: ");
-            response = scanner.nextLine();
+            response = scanner.nextLine().trim();
             switch (response) {
-                case "1" -> System.out.println("Add new category");
-                case "2" -> System.out.println("Add new product");
-                case "3" -> System.out.println("add product variant");
+                case "1" -> AdminProductServices.addNewCategory();
+                case "2" -> AdminProductServices.addNewProduct();
+                case "3" -> AdminProductServices.addProductVariant();
                 case "4" -> System.out.println("edit product stock");
                 case "5" -> System.out.println("edit product stock");
                 case "6" -> System.out.println("edit product stock");

@@ -24,7 +24,7 @@ public class UserApp {
                     2.Create New Acct
                     3.Exit""");
             System.out.print("Response: ");
-            String response = scanner.nextLine();
+            String response = scanner.nextLine().trim();
             switch (response) {
                 case "1" -> {
                     Customer customer = UserServices.userLogin();
@@ -56,7 +56,7 @@ public class UserApp {
                     3.Change password
                     4.Log Out""");
             System.out.print("Response: ");
-            response = scanner.nextLine();
+            response = scanner.nextLine().trim();
             switch (response) {
                 case "1" -> ProductServices.viewProducts(customer);
                 case "2" -> CartServices.viewCart(customer);

@@ -1,5 +1,7 @@
 package dev.luhwani.eCommerceSystem.services;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -57,9 +59,17 @@ public class Utils {
         return passwordPattern.matcher(password).matches();
     }
 
-    static boolean validEmail(String email) {
+    public static boolean validEmail(String email) {
         Pattern emailPattern = Pattern.compile("^[A-Za-z0-9]+@[A-za-z-]+\\.[A-Za-z]{2,}$");
         return emailPattern.matcher(email).matches();
     }
 
+    public static long nairaStringToKobo(String nairaString) {
+        BigDecimal naira = new BigDecimal(nairaString);
+        BigDecimal kobo = naira.multiply(BigDecimal.valueOf(100));
+        if (kobo.scale() > 0) {
+            kobo = kobo.setScale(0,RoundingMode.UNNECESSARY);
+        }
+        return kobo.longValueExact();
+    }
 }

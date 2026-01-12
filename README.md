@@ -45,13 +45,9 @@ ECommerceBackend/
 │               │   └── CartItem.java  
 │               │  
 |               ├── productModels/  
-|               |   ├── categories/  
-│               │   │   └── Automotives.java  
-│               │   │   └── Computerss.java  
-│               │   │   └── Sports.java  
-│               │   ├── Category.java  
-│               │   ├── Product.java  
-│               │   ├── Variant.java  
+│               │   └── Category.java  
+│               │   └── Product.java  
+│               │   └── Variant.java  
 │               │  
 │               ├── services/  
 │               │   └── AdminProductServices.java  
@@ -64,7 +60,7 @@ ECommerceBackend/
 │               │   └── Admin.java  
 │               │   └── Customer.java  
 │               │   └── Person.java  
-│               │   └── Role.java  
+│               │   └── Staff.java  
 │               │   └── UserModel.java  
 │               │  
 │               ├── AdminApp.java  

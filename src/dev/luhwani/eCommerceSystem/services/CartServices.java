@@ -16,7 +16,7 @@ public class CartServices {
         while (true) {
             System.out.println("Enter the amount of the product\nto add to cart");
             System.out.print("Response: ");
-            choice = scanner.nextLine();
+            choice = scanner.nextLine().trim();
             try {
                 quantity = Integer.parseInt(choice);
                 break;
@@ -49,7 +49,7 @@ public class CartServices {
             System.out.println("Enter the number of the product you wish to buy");
             System.out.println("or click 0 to exit");
             System.out.print("Response: ");
-            choice = scanner.nextLine();
+            choice = scanner.nextLine().trim();
             try {
                 if (Integer.parseInt(choice) > customer.getCart().getCartItems().size() || Integer.parseInt(choice) < 0) {
                     System.out.println("Invalid choice");

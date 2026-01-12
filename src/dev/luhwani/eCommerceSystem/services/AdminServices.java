@@ -19,7 +19,7 @@ public class AdminServices {
         Admin admin;
         while (true) {
             System.out.println("Enter your worker ID: ");
-            workId = scanner.nextLine();
+            workId = scanner.nextLine().trim();
             try {
                 if (workIdToAdminMap.containsKey(Integer.parseInt(workId))) {
                     admin = workIdToAdminMap.get(Integer.parseInt(workId));
@@ -49,7 +49,7 @@ public class AdminServices {
         Staff staff = null;
         while (true) {
             System.out.println("Enter your work ID: ");
-            id = scanner.nextLine();
+            id = scanner.nextLine().trim();
             try {
                 idInt = Integer.parseInt(id);
                 if (workIdToAdminMap.containsKey(idInt)) {
