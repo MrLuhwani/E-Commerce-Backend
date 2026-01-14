@@ -41,7 +41,7 @@ public class CartServices {
             counter++;
             System.out.println("product " + counter + ".");
             System.out.println("___________");
-            cartItem.getVariant().showDetails();
+            cartItem.getVariant().getDetails();
             System.out.print("Quantity: " + cartItem.getQuantity());
         }
         String choice;

@@ -1,14 +1,40 @@
 package dev.luhwani.eCommerceSystem.services;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import dev.luhwani.eCommerceSystem.cartModel.CartItem;
 import dev.luhwani.eCommerceSystem.productModels.Category;
 import dev.luhwani.eCommerceSystem.productModels.Product;
 import dev.luhwani.eCommerceSystem.productModels.Variant;
+import dev.luhwani.eCommerceSystem.userModels.Customer;
 
 public class AdminProductServices {
-    
+
+    static {
+        List<Variant> lowStockVariants = new ArrayList<>();
+        
+        for (Product product : ProductServices.products) {
+            for (Variant variant : product.getVariants()) {
+                if (variant.getStock() >= 12) {
+                    lowStockVariants.add(variant);
+                }
+            }
+        }
+        if (!lowStockVariants.isEmpty()) {
+            System.out.println("Products with low stock...");
+            for (Variant variant : lowStockVariants) {
+                variant.getDetails();
+                System.out.println("Stock: " + variant.getStock());   
+            }
+        }
+    }
+
     static Scanner scanner = new Scanner(System.in);
 
     public static void addNewCategory() {
@@ -45,26 +71,26 @@ public class AdminProductServices {
         description = scanner.nextLine().trim();
         Product product = new Product(name, description);
         System.out.println("""
-            How to Register Products Categories
-            Example: 1.Jewelry 2.Tech 3.Accessory 4.Furniture
-            If the product belongs to furniture and accessory category
-            Your response: 3,4
-            """);
+                How to Register Products Categories
+                Example: 1.Jewelry 2.Tech 3.Accessory 4.Furniture
+                If the product belongs to furniture and accessory category
+                Your response: 3,4
+                """);
         System.out.println("Available Product Categories:");
         ProductServices.printCategories();
         String productCategories;
         String[] categoriesArr = null;
-        while(true) {
+        while (true) {
             boolean validCategories = true;
             System.out.print("Enter product categories: ");
             productCategories = scanner.nextLine().trim();
             Pattern pattern = Pattern.compile("^\\d+(,\\d+)*$");
             boolean validFormat = pattern.matcher(productCategories).matches();
-            if(validFormat) {
+            if (validFormat) {
                 categoriesArr = productCategories.split(",");
                 for (String string : categoriesArr) {
                     if (Integer.parseInt(string) > ProductServices.categories.size()) {
-                        System.out.printf("%s is invalid\n",string);
+                        System.out.printf("%s is invalid\n", string);
                         validCategories = false;
                     }
                 }
@@ -81,19 +107,12 @@ public class AdminProductServices {
         }
         System.out.println("Product has successfuly been added to categories");
     }
-    
+
     public static void addProductVariant() {
-        String productName;
-        while (true) {
-            System.out.println("Enter product name: ");
-            productName = scanner.nextLine().trim().toLowerCase();
-            if (ProductServices.productNameToObjectMap.containsKey(productName)) {
-                break;
-            }
-            System.out.println("Product not found");
+        Product product = getProductChoice();
+        if (Objects.isNull(product)) {
             return;
         }
-        Product product = ProductServices.productNameToObjectMap.get(productName);
         String variation;
         System.out.println("Enter variant features: ");
         variation = scanner.nextLine().trim();
@@ -107,14 +126,202 @@ public class AdminProductServices {
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input");
             } catch (Exception e) {
-              e.printStackTrace();
+                e.printStackTrace();
             }
         }
         long priceInKobo = Utils.nairaStringToKobo(nairaString);
         Variant variant = new Variant(true, priceInKobo, variation, 0);
         product.addVariant(variant);
-        /*
-        run produ.addVar
-         */
+    }
+
+    public static void editProductStock() {
+        Product product = getProductChoice();
+        if (Objects.isNull(product)) {
+            return;
+        }
+        int count = 0;
+        for (Variant variant : product.getVariants()) {
+            count++;
+            System.out.println("product " + count + ".");
+            System.out.println("_____________");
+            variant.getDetails();
+        }
+        String choice = getChoice(count);
+        Variant variant = product.getVariants().get(Integer.parseInt(choice) - 1);
+        boolean makingChoice = true;
+        while (makingChoice) {
+            System.out.println("""
+                    a.Increase stock
+                    b.Decrease stock""");
+            System.out.print("Enter the option of your response: ");
+            choice = scanner.nextLine().trim().toLowerCase();
+            switch (choice) {
+                case "a", "b" -> {
+                    makingChoice = false;
+                }
+                default -> System.out.println("Invalid input");
+            }
+        }
+        String stockChange;
+        while (true) {
+            System.out.print("Enter the amount of the stock change: ");
+            stockChange = scanner.nextLine();
+            try {
+                Integer.parseInt(stockChange);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        int stock;
+        if (choice == "a") {
+            stock = variant.getStock() + Integer.parseInt(stockChange);
+            variant.setStock(stock);
+        } else {
+            stock = variant.getStock() + Integer.parseInt(stockChange);
+            variant.setStock(stock);
+        }
+        System.out.println("Stock change successful");
+    }
+
+    public static void temporaryDeactivation() {
+        Product product = getProductChoice();
+        if (Objects.isNull(product)) {
+            return;
+        }
+        int count = 0;
+        for (Variant variant : product.getVariants()) {
+            count++;
+            System.out.println("product " + count + ".");
+            System.out.println("_____________");
+            variant.getDetails();
+        }
+        String choice = getChoice(count);
+        Variant variant = product.getVariants().get(Integer.parseInt(choice) - 1);
+        variant.setIsActive(false);
+        System.out.println("Product is temporarily deactivated");
+    }
+
+    public static void permanentDeactivation() {
+        Product product = getProductChoice();
+        if (Objects.isNull(product)) {
+            return;
+        }
+        int count = 0;
+        for (Variant variant : product.getVariants()) {
+            count++;
+            System.out.println("product " + count + ".");
+            System.out.println("_____________");
+            variant.getDetails();
+        }
+        String choice = getChoice(count);
+        Variant variant = product.getVariants().get(Integer.parseInt(choice) - 1);
+        product.getVariants().remove(variant);
+        ProductServices.productNameToObjectMap.get(product.getName()).getVariants().remove(variant);
+        for (Customer customer : UserServices.customers) {
+            for (int i = customer.getCart().getCartItems().size() - 1; i >= 0; i--) {
+                if (customer.getCart().getCartItems().get(i).getItemId() == variant.getId()) {
+                    customer.getCart().getCartItems().remove(i);
+                    //think of how to notify the customers when deleted
+                }
+            }
+        }
+        System.out.println("Product deleted successfully");
+    }
+
+    public static void changeProductPrice() {
+        Product product = getProductChoice();
+        if (Objects.isNull(product)) {
+            return;
+        }
+        int count = 0;
+        for (Variant variant : product.getVariants()) {
+            count++;
+            System.out.println("product " + count + ".");
+            System.out.println("_____________");
+            variant.getDetails();
+        }
+        String choice = getChoice(count);
+        Variant variant = product.getVariants().get(Integer.parseInt(choice) - 1);
+        String nairaString;
+        while (true) {
+            System.out.print("Enter the new price(₦): ");
+            nairaString = scanner.nextLine().trim();
+            try {
+                Double.parseDouble(nairaString);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        long kobo = Utils.nairaStringToKobo(nairaString);
+        ProductServices.products.remove(product);
+        ProductServices.productNameToObjectMap.remove(product.getName());
+        product.getVariants().remove(variant);
+        List<Customer> customersWithItem = new ArrayList<>();
+        Map<String, Integer> customerEmailToQuantity = new HashMap<>();
+        for (int i = UserServices.customers.size() - 1; i >= 0; i--) {
+            Customer customer = UserServices.customers.get(i);
+            for (int j = customer.getCart().getCartItems().size() - 1; j >= 0; j--) {
+                if (customer.getCart().getCartItems().get(i).getItemId() == variant.getId()) {
+                    UserServices.customers.remove(i);
+                    UserServices.emailToCustomerMap.remove(customer.getPerson().getEmail());
+                    int quantity = customer.getCart().getCartItems().get(j).getQuantity();
+                    customer.getCart().getCartItems().remove(j);
+                    customersWithItem.add(customer);
+                    customerEmailToQuantity.put(customer.getPerson().getEmail(),quantity);
+                }
+            }
+        }
+        variant.setKoboPrice(kobo);
+        product.getVariants().add(variant);
+        ProductServices.productNameToObjectMap.put(product.getName(), product);
+        ProductServices.products.add(product);
+        CartItem cartItem = new CartItem(variant,0);
+        for (Customer customer : customersWithItem) {
+            cartItem.setQuantity(customerEmailToQuantity.get(customer.getPerson().getEmail()));
+            customer.getCart().getCartItems().add(cartItem);
+            UserServices.customers.add(customer);
+            UserServices.emailToCustomerMap.put(customer.getPerson().getEmail(),customer);
+        }
+        System.out.println("Price updated successfully");
+    }
+
+    private static Product getProductChoice() {
+        String productName;
+        while (true) {
+            System.out.println("Enter product name: ");
+            productName = scanner.nextLine().trim().toLowerCase();
+            if (ProductServices.productNameToObjectMap.containsKey(productName)) {
+                break;
+            }
+            System.out.println("Product not found");
+            return null;
+        }
+        return ProductServices.productNameToObjectMap.get(productName);
+    }
+
+    private static String getChoice(int count) {
+        String choice;
+        while (true) {
+            System.out.print("Enter the number for the variant: ");
+            choice = scanner.nextLine().trim().toLowerCase();
+            try {
+                if (Integer.parseInt(choice) > count || Integer.parseInt(choice) <= 0) {
+                    System.out.println("Invalid choice");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return choice;
     }
 }

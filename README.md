@@ -19,16 +19,15 @@ Admin Services:
 - Register new admins
 - Admin login
 - Change admin password
+- Addition and removal of products, variants, and product categories
+- edit product stock
+- Change in price of products
+
 ---
 
-## Planned Features
-User Management:
+## Future Features
 - Persistence in App logic
-
-Admin Tools
-- Addition and removal of products
-- Analytics of most purchased product
-- Change in price of products
+- Password Encryption
 ---
 
 ## Project Structure

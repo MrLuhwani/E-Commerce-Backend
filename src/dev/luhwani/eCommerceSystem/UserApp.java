@@ -62,8 +62,7 @@ public class UserApp {
                 case "2" -> CartServices.viewCart(customer);
                 case "3" -> {
                     String password = Utils.changePassword(customer);
-                    dev.luhwani.eCommerceSystem.services.UserServices.emailToCustomerMap
-                            .get(customer.getPerson().getEmail()).setPassword(password);
+                    UserServices.emailToCustomerMap.get(customer.getPerson().getEmail()).setPassword(password);
                 }
                 case "4" -> {
                     running = false;

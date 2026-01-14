@@ -13,6 +13,10 @@ public class CartItem {
         this.quantity = quantity;
     }
 
+    public int getItemId() {
+        return itemId;
+    }
+
     public void setCart(Cart cart) {
         this.cart = cart;
     }
@@ -23,5 +27,9 @@ public class CartItem {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
     }
 }

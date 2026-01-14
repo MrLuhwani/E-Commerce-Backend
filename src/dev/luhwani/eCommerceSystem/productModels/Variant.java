@@ -42,13 +42,16 @@ public class Variant {
         return isActive;
     }
 
-    public void showDetails() {
+    public void getDetails() {
         System.out.printf("""
                 Name: %s
                 Description: %s
                 Price: #%f
                 Feature: %s \n""",product.getName(),product.getDescription(),getPriceInNaira(),variation);
-                //change this abeg
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     public int getId() {
@@ -57,5 +60,13 @@ public class Variant {
 
     public int getStock() {
         return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public void setKoboPrice(long price) {
+        this.priceInKobo = price;
     }
 }

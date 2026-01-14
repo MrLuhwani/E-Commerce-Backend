@@ -59,7 +59,7 @@ public class ProductServices {
                     numOfVariants += 1;
                     System.out.println("product " + numOfVariants + ".");
                     System.out.println("_____________");
-                    variant.showDetails();
+                    variant.getDetails();
                     activeVariants.add(variant);
                 }
             }

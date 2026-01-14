@@ -53,33 +53,27 @@ public class AdminApp {
                     1.Add new product category
                     2.Add new product
                     3.Add new variant
-                    4.Edit product stock
-                    5.Product temporary deactivation
-                    6.Permanent product deletion
-                    7.Log Out""");
+                    4.Change Product Price
+                    5.Edit product stock
+                    6.Product temporary deactivation
+                    7.Permanent product deletion
+                    8.Log Out""");
             System.out.print("Response: ");
             response = scanner.nextLine().trim();
             switch (response) {
                 case "1" -> AdminProductServices.addNewCategory();
                 case "2" -> AdminProductServices.addNewProduct();
                 case "3" -> AdminProductServices.addProductVariant();
-                case "4" -> System.out.println("edit product stock");
-                case "5" -> System.out.println("edit product stock");
-                case "6" -> System.out.println("edit product stock");
-                case "7" -> {
+                case "4" -> AdminProductServices.changeProductPrice();
+                case "5" -> AdminProductServices.editProductStock();
+                case "6" -> AdminProductServices.temporaryDeactivation();
+                case "7" -> AdminProductServices.permanentDeactivation();
+                case "8" -> {
                     running = false;
                     System.out.println("Logging Out...");
                 }
                 default -> System.out.println("Invalid input");
             }
         }
-        /*
-         * low stock static method alert
-         * view customer details e.g name, email, then it is logged because stuff like
-         * this
-         * has legal stuff in real life
-         * create an order time variablde
-         * 
-         */
     }
 }
