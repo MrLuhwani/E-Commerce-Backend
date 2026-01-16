@@ -1,4 +1,4 @@
-package dev.luhwani.eCommerceSystem.services;
+package dev.luhwani.app.services;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -6,16 +6,35 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import dev.luhwani.eCommerceSystem.cartModel.Cart;
-import dev.luhwani.eCommerceSystem.userModels.Customer;
-import dev.luhwani.eCommerceSystem.userModels.Person;
+import dev.luhwani.app.repositories.CustomerRepo;
+import dev.luhwani.app.models.cartModel.Cart;
+import dev.luhwani.app.models.userModels.Customer;
+import dev.luhwani.app.models.userModels.Person;
 
 public class UserServices {
+
+    private CustomerRepo customerRepo;
+    public UserServices(CustomerRepo customerRepo) {
+        this.customerRepo = customerRepo;
+    }
 
     public static Map<String, Customer> emailToCustomerMap = new HashMap<>();
     static Scanner scanner = new Scanner(System.in);
     static List<Customer> customers = new ArrayList<>();
 
+    public List<Customer> getCustomerList() {
+        return customerRepo.customerList;
+    }
+
+    // public boolean emailExists(String email) {
+    //     if(getEmailToCustomer().containsKey(email)) {
+            
+    //     }
+    // }
+
+    public Map<String, Customer> getEmailToCustomer() {
+        return customerRepo.emailToCustomerMap;
+    }
     public static Customer userLogin() {
         String email;
         while(true) {

@@ -1,11 +1,11 @@
-package dev.luhwani.eCommerceSystem.services;
+package dev.luhwani.app.services;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import dev.luhwani.eCommerceSystem.userModels.UserModel;
+import dev.luhwani.app.models.userModels.UserModel;
 
 public class Utils {
 

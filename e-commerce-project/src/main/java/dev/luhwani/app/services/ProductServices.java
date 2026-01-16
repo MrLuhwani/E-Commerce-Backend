@@ -1,4 +1,4 @@
-package dev.luhwani.eCommerceSystem.services;
+package dev.luhwani.app.services;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import dev.luhwani.eCommerceSystem.productModels.Category;
-import dev.luhwani.eCommerceSystem.productModels.Product;
-import dev.luhwani.eCommerceSystem.productModels.Variant;
-import dev.luhwani.eCommerceSystem.userModels.Customer;
+import dev.luhwani.app.models.productModels.Category;
+import dev.luhwani.app.models.productModels.Product;
+import dev.luhwani.app.models.productModels.Variant;
+import dev.luhwani.app.models.userModels.Customer;
 
 public class ProductServices {
     

@@ -1,9 +1,9 @@
-package dev.luhwani.eCommerceSystem.cartModel;
+package dev.luhwani.app.models.cartModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import dev.luhwani.eCommerceSystem.userModels.Customer;
+import dev.luhwani.app.models.userModels.Customer;
 
 public class Cart {
     private int cartId;

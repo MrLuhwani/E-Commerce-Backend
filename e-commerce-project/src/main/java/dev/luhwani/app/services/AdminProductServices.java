@@ -1,18 +1,15 @@
-package dev.luhwani.eCommerceSystem.services;
+package dev.luhwani.app.services;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import dev.luhwani.eCommerceSystem.cartModel.CartItem;
-import dev.luhwani.eCommerceSystem.productModels.Category;
-import dev.luhwani.eCommerceSystem.productModels.Product;
-import dev.luhwani.eCommerceSystem.productModels.Variant;
-import dev.luhwani.eCommerceSystem.userModels.Customer;
+import dev.luhwani.app.models.productModels.Category;
+import dev.luhwani.app.models.productModels.Product;
+import dev.luhwani.app.models.productModels.Variant;
+import dev.luhwani.app.models.userModels.Customer;
 
 public class AdminProductServices {
 
@@ -21,7 +18,7 @@ public class AdminProductServices {
         
         for (Product product : ProductServices.products) {
             for (Variant variant : product.getVariants()) {
-                if (variant.getStock() >= 12) {
+                if (variant.getStock() <= 12) {
                     lowStockVariants.add(variant);
                 }
             }
@@ -165,23 +162,30 @@ public class AdminProductServices {
         String stockChange;
         while (true) {
             System.out.print("Enter the amount of the stock change: ");
-            stockChange = scanner.nextLine();
-            try {
-                Integer.parseInt(stockChange);
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input");
-            } catch (Exception e) {
-                e.printStackTrace();
+            stockChange = scanner.nextLine().trim();
+            if (!stockChange.startsWith("-")) {
+                try {
+                    Integer.parseInt(stockChange);
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
-        int stock;
-        if (choice == "a") {
-            stock = variant.getStock() + Integer.parseInt(stockChange);
-            variant.setStock(stock);
+        int change = Integer.parseInt(stockChange);
+        int newStock = 0;
+        if (change < 0) {
+            System.out.println("Megatives not allowed");
+            return;
+        }
+        if (choice.equals("a")) {
+            newStock = variant.getStock() + change;
+            variant.setStock(newStock);
         } else {
-            stock = variant.getStock() + Integer.parseInt(stockChange);
-            variant.setStock(stock);
+            newStock = variant.getStock() - Integer.parseInt(stockChange);
+            variant.setStock(newStock);
         }
         System.out.println("Stock change successful");
     }
@@ -259,35 +263,7 @@ public class AdminProductServices {
             }
         }
         long kobo = Utils.nairaStringToKobo(nairaString);
-        ProductServices.products.remove(product);
-        ProductServices.productNameToObjectMap.remove(product.getName());
-        product.getVariants().remove(variant);
-        List<Customer> customersWithItem = new ArrayList<>();
-        Map<String, Integer> customerEmailToQuantity = new HashMap<>();
-        for (int i = UserServices.customers.size() - 1; i >= 0; i--) {
-            Customer customer = UserServices.customers.get(i);
-            for (int j = customer.getCart().getCartItems().size() - 1; j >= 0; j--) {
-                if (customer.getCart().getCartItems().get(i).getItemId() == variant.getId()) {
-                    UserServices.customers.remove(i);
-                    UserServices.emailToCustomerMap.remove(customer.getPerson().getEmail());
-                    int quantity = customer.getCart().getCartItems().get(j).getQuantity();
-                    customer.getCart().getCartItems().remove(j);
-                    customersWithItem.add(customer);
-                    customerEmailToQuantity.put(customer.getPerson().getEmail(),quantity);
-                }
-            }
-        }
         variant.setKoboPrice(kobo);
-        product.getVariants().add(variant);
-        ProductServices.productNameToObjectMap.put(product.getName(), product);
-        ProductServices.products.add(product);
-        CartItem cartItem = new CartItem(variant,0);
-        for (Customer customer : customersWithItem) {
-            cartItem.setQuantity(customerEmailToQuantity.get(customer.getPerson().getEmail()));
-            customer.getCart().getCartItems().add(cartItem);
-            UserServices.customers.add(customer);
-            UserServices.emailToCustomerMap.put(customer.getPerson().getEmail(),customer);
-        }
         System.out.println("Price updated successfully");
     }
 

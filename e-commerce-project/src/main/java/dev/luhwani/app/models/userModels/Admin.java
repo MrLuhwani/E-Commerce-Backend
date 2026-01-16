@@ -1,4 +1,4 @@
-package dev.luhwani.eCommerceSystem.userModels;
+package dev.luhwani.app.models.userModels;
 
 public class Admin extends UserModel{
     

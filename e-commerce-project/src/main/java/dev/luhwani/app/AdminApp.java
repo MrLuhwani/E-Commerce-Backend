@@ -1,17 +1,20 @@
-package dev.luhwani.eCommerceSystem;
+package dev.luhwani.app;
 
 import java.util.Objects;
 import java.util.Scanner;
 
-import dev.luhwani.eCommerceSystem.services.AdminProductServices;
-import dev.luhwani.eCommerceSystem.services.AdminServices;
-import dev.luhwani.eCommerceSystem.userModels.Admin;
+import dev.luhwani.app.models.userModels.Admin;
+import dev.luhwani.app.services.AdminProductServices;
+import dev.luhwani.app.services.AdminServices;
 
 public class AdminApp {
 
-    static Scanner scanner = new Scanner(System.in);
-
+    private static final Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) throws Exception {
+        startApp();
+    }
+
+    private static void startApp() {
         boolean running = true;
         while (running) {
             System.out.println("""
@@ -25,7 +28,7 @@ public class AdminApp {
             switch (response) {
                 case "1" -> {
                     Admin admin = AdminServices.adminLogin();
-                    if(!Objects.isNull(admin)) {
+                    if (!Objects.isNull(admin)) {
                         menu(admin);
                     }
                 }

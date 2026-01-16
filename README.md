@@ -32,39 +32,43 @@ Admin Services:
 
 ## Project Structure
 ECommerceBackend/  
-├── .vscode/  
-│   └── settings.json  
-├── lib/  
+├── e-commerce-project/  
 ├── src/  
-│   └── dev/  
-│       └── luhwani/  
-│           └── eCommerceSystem/  
-│               ├── cartModel/  
-│               │   └── Cart.java  
-│               │   └── CartItem.java  
-│               │  
-|               ├── productModels/  
-│               │   └── Category.java  
-│               │   └── Product.java  
-│               │   └── Variant.java  
-│               │  
-│               ├── services/  
-│               │   └── AdminProductServices.java  
-│               │   └── AdminServices.java  
-│               │   └── CartServices.java  
-│               │   └── productServices.java  
-│               │   └── UserServices.java  
-│               │  
-│               ├── userModels/  
-│               │   └── Admin.java  
-│               │   └── Customer.java  
-│               │   └── Person.java  
-│               │   └── Staff.java  
-│               │   └── UserModel.java  
-│               │  
-│               ├── AdminApp.java  
-│               ├── UserApp.java  
-
+│   ├── main/  
+│   │    └── java/  
+│   │        └── dev/  
+│   │            └── luhwani/  
+│   │                └── app/  
+│   │                    ├── models/  
+│   │                    │   ├─ cartModel/  
+│   │                    │   │    └── Cart.java  
+│   │                    │   │    └── CartItem.java
+│   │                    │   ├─ productModels/  
+│   │                    │   │    └── Category.java  
+│   │                    │   │    └── Product.java  
+│   │                    │   │    └── Variant.java  
+│   │                    │   └─ userModels/  
+│   │                    │        └── Admin.java  
+│   │                    │        └── Customer.java  
+│   │                    │        └── Person.java  
+│   │                    │        └── Staff.java  
+│   │                    │        └── UserModel.java  
+│   │                    ├── repositories/  
+│   │                    │   └── AdminRepo.java  
+│   │                    │   └── CustomerRepo.java  
+│   │                    ├── services/  
+│   │                    │   └── AdminProductServices.java  
+│   │                    │   └── AdminServices.java  
+│   │                    │   └── CartServices.java  
+│   │                    │   └── ProductServices.java  
+│   │                    │   └── UserServices.java  
+│   │                    │   └── Utils.java  
+│   │                    ├── AdminApp.java  
+│   │                    └── UserApp.java  
+│   ├── target/  
+│   └── pom.xml  
+├── .gitignore  
+└── README.md  
 
 The workspace contains two folders by default, where:
 - `src`: the folder to maintain sources

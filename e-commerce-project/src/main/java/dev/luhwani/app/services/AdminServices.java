@@ -1,11 +1,11 @@
-package dev.luhwani.eCommerceSystem.services;
+package dev.luhwani.app.services;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import dev.luhwani.eCommerceSystem.userModels.Admin;
-import dev.luhwani.eCommerceSystem.userModels.Staff;
+import dev.luhwani.app.models.userModels.Admin;
+import dev.luhwani.app.models.userModels.Staff;
 
 public class AdminServices {
 

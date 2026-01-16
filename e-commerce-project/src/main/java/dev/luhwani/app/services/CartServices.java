@@ -1,10 +1,10 @@
-package dev.luhwani.eCommerceSystem.services;
+package dev.luhwani.app.services;
 
 import java.util.Scanner;
 
-import dev.luhwani.eCommerceSystem.cartModel.CartItem;
-import dev.luhwani.eCommerceSystem.productModels.Variant;
-import dev.luhwani.eCommerceSystem.userModels.Customer;
+import dev.luhwani.app.models.cartModel.CartItem;
+import dev.luhwani.app.models.productModels.Variant;
+import dev.luhwani.app.models.userModels.Customer;
 
 public class CartServices {
 
