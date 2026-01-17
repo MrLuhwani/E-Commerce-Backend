@@ -224,7 +224,7 @@ public class AdminProductServices {
         Variant variant = product.getVariants().get(Integer.parseInt(choice) - 1);
         product.getVariants().remove(variant);
         ProductServices.productNameToObjectMap.get(product.getName()).getVariants().remove(variant);
-        for (Customer customer : UserServices.customers) {
+        for (Customer customer : CustomerServices.customers) {
             for (int i = customer.getCart().getCartItems().size() - 1; i >= 0; i--) {
                 if (customer.getCart().getCartItems().get(i).getItemId() == variant.getId()) {
                     customer.getCart().getCartItems().remove(i);

@@ -60,8 +60,8 @@ ECommerceBackend/
 │   │                    │   └── AdminProductServices.java  
 │   │                    │   └── AdminServices.java  
 │   │                    │   └── CartServices.java  
+│   │                    │   └── CustomerServices.java  
 │   │                    │   └── ProductServices.java  
-│   │                    │   └── UserServices.java  
 │   │                    │   └── Utils.java  
 │   │                    ├── AdminApp.java  
 │   │                    └── UserApp.java  

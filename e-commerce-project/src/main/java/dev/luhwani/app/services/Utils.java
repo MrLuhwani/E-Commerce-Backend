@@ -49,12 +49,12 @@ public class Utils {
         return newPassword;
     }
     
-    static boolean validName(String name) {
+    public static boolean validName(String name) {
         Pattern namePattern = Pattern.compile("^[A-Za-z]{2,}$");
         return namePattern.matcher(name).matches();
     }
 
-    static boolean validPassword(String password) {
+    public static boolean validPassword(String password) {
         Pattern passwordPattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[^A-Za-z0-9\\s])[^\\s]{7,20}$");
         return passwordPattern.matcher(password).matches();
     }
