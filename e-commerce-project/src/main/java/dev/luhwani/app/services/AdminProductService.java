@@ -11,12 +11,12 @@ import dev.luhwani.app.models.productModels.Product;
 import dev.luhwani.app.models.productModels.Variant;
 import dev.luhwani.app.models.userModels.Customer;
 
-public class AdminProductServices {
+public class AdminProductService {
 
     static {
         List<Variant> lowStockVariants = new ArrayList<>();
         
-        for (Product product : ProductServices.products) {
+        for (Product product : ProductService.products) {
             for (Variant variant : product.getVariants()) {
                 if (variant.getStock() <= 12) {
                     lowStockVariants.add(variant);
@@ -39,7 +39,7 @@ public class AdminProductServices {
         while (true) {
             System.out.println("Enter new category: ");
             name = scanner.nextLine().trim().toLowerCase();
-            if (ProductServices.categoryNameToObjectMap.containsKey(name)) {
+            if (ProductService.categoryNameToObjectMap.containsKey(name)) {
                 System.out.println("This category has already been created");
                 return;
             } else {
@@ -47,8 +47,8 @@ public class AdminProductServices {
             }
         }
         Category category = new Category(name);
-        ProductServices.categories.add(category);
-        ProductServices.categoryNameToObjectMap.put(category.getName(), category);
+        ProductService.categories.add(category);
+        ProductService.categoryNameToObjectMap.put(category.getName(), category);
     }
 
     public static void addNewProduct() {
@@ -56,7 +56,7 @@ public class AdminProductServices {
         while (true) {
             System.out.println("Enter product name: ");
             name = scanner.nextLine().trim().toLowerCase();
-            if (ProductServices.productNameToObjectMap.containsKey(name)) {
+            if (ProductService.productNameToObjectMap.containsKey(name)) {
                 System.out.println("This product already exists");
                 return;
             } else {
@@ -74,7 +74,7 @@ public class AdminProductServices {
                 Your response: 3,4
                 """);
         System.out.println("Available Product Categories:");
-        ProductServices.printCategories();
+        ProductService.printCategories();
         String productCategories;
         String[] categoriesArr = null;
         while (true) {
@@ -86,7 +86,7 @@ public class AdminProductServices {
             if (validFormat) {
                 categoriesArr = productCategories.split(",");
                 for (String string : categoriesArr) {
-                    if (Integer.parseInt(string) > ProductServices.categories.size()) {
+                    if (Integer.parseInt(string) > ProductService.categories.size()) {
                         System.out.printf("%s is invalid\n", string);
                         validCategories = false;
                     }
@@ -100,7 +100,7 @@ public class AdminProductServices {
             }
         }
         for (String str : categoriesArr) {
-            ProductServices.categories.get(Integer.parseInt(str) - 1).addProduct(product);
+            ProductService.categories.get(Integer.parseInt(str) - 1).addProduct(product);
         }
         System.out.println("Product has successfuly been added to categories");
     }
@@ -223,15 +223,15 @@ public class AdminProductServices {
         String choice = getChoice(count);
         Variant variant = product.getVariants().get(Integer.parseInt(choice) - 1);
         product.getVariants().remove(variant);
-        ProductServices.productNameToObjectMap.get(product.getName()).getVariants().remove(variant);
-        for (Customer customer : CustomerServices.customers) {
-            for (int i = customer.getCart().getCartItems().size() - 1; i >= 0; i--) {
-                if (customer.getCart().getCartItems().get(i).getItemId() == variant.getId()) {
-                    customer.getCart().getCartItems().remove(i);
-                    //think of how to notify the customers when deleted
-                }
-            }
-        }
+        ProductService.productNameToObjectMap.get(product.getName()).getVariants().remove(variant);
+        // for (Customer customer : CustomerService.customers) {
+        //     for (int i = customer.getCart().getCartItems().size() - 1; i >= 0; i--) {
+        //         if (customer.getCart().getCartItems().get(i).getItemId() == variant.getId()) {
+        //             customer.getCart().getCartItems().remove(i);
+        //             //think of how to notify the customers when deleted
+        //         }
+        //     }
+        // }
         System.out.println("Product deleted successfully");
     }
 
@@ -272,13 +272,13 @@ public class AdminProductServices {
         while (true) {
             System.out.println("Enter product name: ");
             productName = scanner.nextLine().trim().toLowerCase();
-            if (ProductServices.productNameToObjectMap.containsKey(productName)) {
+            if (ProductService.productNameToObjectMap.containsKey(productName)) {
                 break;
             }
             System.out.println("Product not found");
             return null;
         }
-        return ProductServices.productNameToObjectMap.get(productName);
+        return ProductService.productNameToObjectMap.get(productName);
     }
 
     private static String getChoice(int count) {

@@ -7,7 +7,7 @@ import java.util.Scanner;
 import dev.luhwani.app.models.userModels.Admin;
 import dev.luhwani.app.models.userModels.Staff;
 
-public class AdminServices {
+public class AdminService {
 
     static Map<Integer, Admin> workIdToAdminMap = new HashMap<>();
     // this is a map containing the staffs alone, but not staffs that are admins

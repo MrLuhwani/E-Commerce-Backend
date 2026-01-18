@@ -9,7 +9,7 @@ import java.util.Map;
 import dev.luhwani.app.models.userModels.Customer;
 
 public class CustomerRepo {
-    public List<Customer> customerList = new ArrayList<>();
+    public List<Customer> customers = new ArrayList<>();
     public Map<String, Customer> emailToCustomerMap = new HashMap<>();
     
 }

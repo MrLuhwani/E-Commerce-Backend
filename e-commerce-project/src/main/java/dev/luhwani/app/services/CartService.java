@@ -6,7 +6,7 @@ import dev.luhwani.app.models.cartModel.CartItem;
 import dev.luhwani.app.models.productModels.Variant;
 import dev.luhwani.app.models.userModels.Customer;
 
-public class CartServices {
+public class CartService {
 
     static Scanner scanner = new Scanner(System.in);
 

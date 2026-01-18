@@ -4,27 +4,22 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 import dev.luhwani.app.repositories.CustomerRepo;
 import dev.luhwani.app.models.cartModel.Cart;
 import dev.luhwani.app.models.userModels.Customer;
 import dev.luhwani.app.models.userModels.Person;
 
-public class CustomerServices {
+public class CustomerService {
 
     private CustomerRepo customerRepo;
     
-    public CustomerServices(CustomerRepo customerRepo) {
+    public CustomerService(CustomerRepo customerRepo) {
         this.customerRepo = customerRepo;
     }
 
-    public static Map<String, Customer> emailToCustomerMap = new HashMap<>();
-    static Scanner scanner = new Scanner(System.in);
-    static List<Customer> customers = new ArrayList<>();
-
     public List<Customer> getCustomerList() {
-        return customerRepo.customerList;
+        return customerRepo.customers;
     }
 
     public boolean emailExists(String email) {

@@ -4,8 +4,8 @@ import java.util.Objects;
 import java.util.Scanner;
 
 import dev.luhwani.app.models.userModels.Admin;
-import dev.luhwani.app.services.AdminProductServices;
-import dev.luhwani.app.services.AdminServices;
+import dev.luhwani.app.services.AdminProductService;
+import dev.luhwani.app.services.AdminService;
 
 public class AdminApp {
 
@@ -27,13 +27,13 @@ public class AdminApp {
             String response = scanner.nextLine().trim();
             switch (response) {
                 case "1" -> {
-                    Admin admin = AdminServices.adminLogin();
+                    Admin admin = AdminService.adminLogin();
                     if (!Objects.isNull(admin)) {
                         menu(admin);
                     }
                 }
                 case "2" -> {
-                    Admin admin = AdminServices.adminLogin();
+                    Admin admin = AdminService.adminLogin();
                     if (!Objects.isNull(admin)) {
                         menu(admin);
                     }
@@ -64,13 +64,13 @@ public class AdminApp {
             System.out.print("Response: ");
             response = scanner.nextLine().trim();
             switch (response) {
-                case "1" -> AdminProductServices.addNewCategory();
-                case "2" -> AdminProductServices.addNewProduct();
-                case "3" -> AdminProductServices.addProductVariant();
-                case "4" -> AdminProductServices.changeProductPrice();
-                case "5" -> AdminProductServices.editProductStock();
-                case "6" -> AdminProductServices.temporaryDeactivation();
-                case "7" -> AdminProductServices.permanentDeactivation();
+                case "1" -> AdminProductService.addNewCategory();
+                case "2" -> AdminProductService.addNewProduct();
+                case "3" -> AdminProductService.addProductVariant();
+                case "4" -> AdminProductService.changeProductPrice();
+                case "5" -> AdminProductService.editProductStock();
+                case "6" -> AdminProductService.temporaryDeactivation();
+                case "7" -> AdminProductService.permanentDeactivation();
                 case "8" -> {
                     running = false;
                     System.out.println("Logging Out...");

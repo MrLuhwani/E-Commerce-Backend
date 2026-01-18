@@ -11,7 +11,7 @@ import dev.luhwani.app.models.productModels.Product;
 import dev.luhwani.app.models.productModels.Variant;
 import dev.luhwani.app.models.userModels.Customer;
 
-public class ProductServices {
+public class ProductService {
     
     static List<Category> categories = new ArrayList<>();
     static List<Product> products = new ArrayList<>();
@@ -95,7 +95,7 @@ public class ProductServices {
                         //Not good for an e commerce store
                         //I'll think of something for now
                 case "2" -> {
-                    CartServices.addToCart(customer, chosenVariant);
+                    CartService.addToCart(customer, chosenVariant);
                     return;
                 }
                 default -> System.out.println("Invalid input");

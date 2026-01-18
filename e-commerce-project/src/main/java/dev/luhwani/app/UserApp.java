@@ -5,9 +5,10 @@ import java.util.Objects;
 
 import dev.luhwani.app.models.userModels.Customer;
 import dev.luhwani.app.repositories.CustomerRepo;
-import dev.luhwani.app.services.CartServices;
-import dev.luhwani.app.services.ProductServices;
-import dev.luhwani.app.services.CustomerServices;
+import dev.luhwani.app.repositories.ProductRepo;
+import dev.luhwani.app.services.CartService;
+import dev.luhwani.app.services.ProductService;
+import dev.luhwani.app.services.CustomerService;
 import dev.luhwani.app.services.Utils;
 
 public class UserApp {
@@ -15,11 +16,11 @@ public class UserApp {
 
     public static void main(String[] args) throws Exception {
         CustomerRepo customerRepo = new CustomerRepo();
-        CustomerServices customerServices = new CustomerServices(customerRepo);
-        startApp(customerServices);
+        CustomerService customerService = new CustomerService(customerRepo);
+        startApp(customerService);
     }
 
-    private static void startApp(CustomerServices customerServices) {
+    private static void startApp(CustomerService customerService) {
         boolean running = true;
         while (running) {
             System.out.println("""
@@ -32,14 +33,14 @@ public class UserApp {
             String response = scanner.nextLine().trim();
             switch (response) {
                 case "1" -> {
-                    Customer customer = userLogin(customerServices);
+                    Customer customer = userLogin(customerService);
                     if (!Objects.isNull(customer)) {
-                        menu(customer);
+                        menu(customer, customerService);
                     }
                 }
                 case "2" -> {
-                    Customer customer = createAcct(customerServices);
-                    menu(customer);
+                    Customer customer = createAcct(customerService);
+                    menu(customer, customerService);
                 }
                 case "3" -> {
                     running = false;
@@ -50,7 +51,7 @@ public class UserApp {
         }
     }
 
-    private static Customer userLogin(CustomerServices customerServices) {
+    private static Customer userLogin(CustomerService customerService) {
         String email;
         while (true) {
             System.out.print("Enter your email: ");
@@ -61,11 +62,11 @@ public class UserApp {
             System.out.println("Invalid email");
         }
         Customer customer = null;
-        if (!customerServices.emailExists(email)) {
+        if (!customerService.emailExists(email)) {
             System.out.println("Email not found");
             return customer;
         }
-        customer = customerServices.getEmailToCustomer().get(email);
+        customer = customerService.getEmailToCustomer().get(email);
         String password;
         while (true) {
             System.out.print("Enter your password: ");
@@ -78,7 +79,7 @@ public class UserApp {
         }
     }
 
-    private static Customer createAcct(CustomerServices customerServices) {
+    private static Customer createAcct(CustomerService customerService) {
         String email;
         while (true) {
             while (true) {
@@ -89,7 +90,7 @@ public class UserApp {
                 }
                 System.out.println("Invalid email");
             }
-            if (!customerServices.emailExists(email)) {
+            if (!customerService.emailExists(email)) {
                 break;
             }
             System.out.println("This email is already in use");
@@ -128,11 +129,11 @@ public class UserApp {
             }
             System.out.println("Invalid name");
         }
-        Customer customer = customerServices.createNewCustomer(firstName, lastName, email, password);
+        Customer customer = customerService.createNewCustomer(firstName, lastName, email, password);
         return customer;
     }
 
-    private static void menu(Customer customer) {
+    private static void menu(Customer customer, CustomerService customerService) {
         String response;
         boolean running = true;
         while (running) {
@@ -145,12 +146,9 @@ public class UserApp {
             System.out.print("Response: ");
             response = scanner.nextLine().trim();
             switch (response) {
-                case "1" -> ProductServices.viewProducts(customer);
-                case "2" -> CartServices.viewCart(customer);
-                case "3" -> {
-                    String password = Utils.changePassword(customer);
-                    CustomerServices.emailToCustomerMap.get(customer.getPerson().getEmail()).setPassword(password);
-                }
+                case "1" -> ProductService.viewProducts(customer);
+                case "2" -> CartService.viewCart(customer);
+                case "3" -> changePassword(customer);
                 case "4" -> {
                     running = false;
                     System.out.println("Logging Out...");
@@ -160,4 +158,41 @@ public class UserApp {
         }
     }
 
+    private static void changePassword(Customer customer) {
+        String oldPassword = customer.getPassword();
+        while (true) {
+            System.out.print("Enter your old password: ");
+            String input = scanner.nextLine();
+            if (input.equals(oldPassword)) {
+                break;
+            }
+            System.out.println("Invalid Password");
+        }
+        String newPassword;
+        while (true) {
+            System.out.println("""
+                    Set new Password:
+                    Password requirements:
+                    1.Between 7 - 20 characters long
+                    2.No space
+                    3.Contains both letters and numbers
+                    4.Contains at least one symbol""");
+            System.out.print("Response: ");
+            newPassword = scanner.nextLine();
+            if (Utils.validPassword(newPassword)) {
+                break;
+            }
+            System.out.println("Invalid Password");
+        }
+        String confirmPassword;
+        while (true) {
+            System.out.println("Confirm new password: ");
+            confirmPassword = scanner.nextLine();
+            if (newPassword.equals(confirmPassword)) {
+                break;
+            }
+            System.out.println("Password doesnt match");
+        }
+        customer.setPassword(newPassword);
+    }
 }
