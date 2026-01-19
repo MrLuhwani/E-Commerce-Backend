@@ -3,6 +3,7 @@ package dev.luhwani.app;
 import java.util.Scanner;
 import java.util.Objects;
 
+import dev.luhwani.app.applicationContext.UserAppContext;
 import dev.luhwani.app.models.cartModel.CartItem;
 import dev.luhwani.app.models.productModels.Variant;
 import dev.luhwani.app.models.userModels.Customer;
@@ -19,10 +20,12 @@ public class UserApp {
         CustomerRepo customerRepo = new CustomerRepo();
         CustomerService customerService = new CustomerService(customerRepo);
         CartService cartService = new CartService();
-        startApp(customerService, cartService);
+        UserAppContext userAppContext = new UserAppContext(customerService, cartService);
+        startApp(userAppContext);
     }
 
-    private static void startApp(CustomerService customerService, CartService cartService) {
+    private static void startApp(UserAppContext userAppContext) {
+        CustomerService customerService = userAppContext.getCustomerService();
         boolean running = true;
         while (running) {
             System.out.println("""
@@ -37,12 +40,12 @@ public class UserApp {
                 case "1" -> {
                     Customer customer = userLogin(customerService);
                     if (!Objects.isNull(customer)) {
-                        menu(customer, customerService, cartService);
+                        menu(customer, userAppContext);
                     }
                 }
                 case "2" -> {
                     Customer customer = createAcct(customerService);
-                    menu(customer, customerService, cartService);
+                    menu(customer, userAppContext);
                 }
                 case "3" -> {
                     running = false;
@@ -135,7 +138,8 @@ public class UserApp {
         return customer;
     }
 
-    private static void menu(Customer customer, CustomerService customerService, CartService cartService) {
+    private static void menu(Customer customer, UserAppContext userAppContext) {
+        CartService cartService = userAppContext.getCartService();
         String response;
         boolean running = true;
         while (running) {
