@@ -2,6 +2,7 @@ package dev.luhwani.app.services;
 
 import java.util.Scanner;
 
+import dev.luhwani.app.models.cartModel.Cart;
 import dev.luhwani.app.models.cartModel.CartItem;
 import dev.luhwani.app.models.productModels.Variant;
 import dev.luhwani.app.models.userModels.Customer;
@@ -31,11 +32,22 @@ public class CartService {
         System.out.println("product has been added to cart");
     }
 
+    public boolean emptyCart(Customer customer) {
+        return customer.getCart().getCartItems().isEmpty();
+    }
+
+    public Variant getVariant(CartItem cartItem) {
+        return cartItem.getVariant();
+    }
+
+    public Integer getQuantity(CartItem cartItem) {
+        return cartItem.getQuantity();
+    }
+
+    public Cart getCart(Customer customer) {
+        return customer.getCart();
+    }
     public static void viewCart(Customer customer) {
-        if (customer.getCart().getCartItems().isEmpty()) {
-            System.out.println("No items in cart");
-            return;
-        }
         int counter = 0;
         for (CartItem cartItem : customer.getCart().getCartItems()) {
             counter++;

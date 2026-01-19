@@ -3,9 +3,10 @@ package dev.luhwani.app;
 import java.util.Scanner;
 import java.util.Objects;
 
+import dev.luhwani.app.models.cartModel.CartItem;
+import dev.luhwani.app.models.productModels.Variant;
 import dev.luhwani.app.models.userModels.Customer;
 import dev.luhwani.app.repositories.CustomerRepo;
-import dev.luhwani.app.repositories.ProductRepo;
 import dev.luhwani.app.services.CartService;
 import dev.luhwani.app.services.ProductService;
 import dev.luhwani.app.services.CustomerService;
@@ -17,10 +18,11 @@ public class UserApp {
     public static void main(String[] args) throws Exception {
         CustomerRepo customerRepo = new CustomerRepo();
         CustomerService customerService = new CustomerService(customerRepo);
-        startApp(customerService);
+        CartService cartService = new CartService();
+        startApp(customerService, cartService);
     }
 
-    private static void startApp(CustomerService customerService) {
+    private static void startApp(CustomerService customerService, CartService cartService) {
         boolean running = true;
         while (running) {
             System.out.println("""
@@ -35,12 +37,12 @@ public class UserApp {
                 case "1" -> {
                     Customer customer = userLogin(customerService);
                     if (!Objects.isNull(customer)) {
-                        menu(customer, customerService);
+                        menu(customer, customerService, cartService);
                     }
                 }
                 case "2" -> {
                     Customer customer = createAcct(customerService);
-                    menu(customer, customerService);
+                    menu(customer, customerService, cartService);
                 }
                 case "3" -> {
                     running = false;
@@ -133,7 +135,7 @@ public class UserApp {
         return customer;
     }
 
-    private static void menu(Customer customer, CustomerService customerService) {
+    private static void menu(Customer customer, CustomerService customerService, CartService cartService) {
         String response;
         boolean running = true;
         while (running) {
@@ -147,7 +149,7 @@ public class UserApp {
             response = scanner.nextLine().trim();
             switch (response) {
                 case "1" -> ProductService.viewProducts(customer);
-                case "2" -> CartService.viewCart(customer);
+                case "2" -> viewCart(customer, cartService);
                 case "3" -> changePassword(customer);
                 case "4" -> {
                     running = false;
@@ -156,6 +158,50 @@ public class UserApp {
                 default -> System.out.println("Invalid input");
             }
         }
+    }
+
+    private static void viewCart(Customer customer, CartService cartService) {
+        if (cartService.emptyCart(customer)) {
+            System.out.println("No items in cart");
+            return;
+        }
+        int counter = 0;
+        for (CartItem cartItem : cartService.getCart(customer).getCartItems()) {
+            counter++;
+            System.out.println("product " + counter + ".");
+            System.out.println("___________");
+            cartService.getVariant(cartItem).getDetails();
+            System.out.print("Quantity: " + cartService.getQuantity(cartItem));
+        }
+        String choice;
+        int choiceInt;
+        while (true) {
+            System.out.println("Enter the number of the product you wish to buy");
+            System.out.println("or click 0 to exit");
+            System.out.print("Response: ");
+            choice = scanner.nextLine().trim();
+            try {
+                choiceInt = Integer.parseInt(choice);
+                if (choiceInt > cartService.getCart(customer).getCartItems().size()
+                        || choiceInt < 0) {
+                    System.out.println("Invalid choice");
+                } else if (choiceInt == 0) {
+                    System.out.println("Returning to menu...");
+                    return;
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        CartItem cartItem = cartService.getCart(customer).getCartItems().get(choiceInt - 1);
+        Variant variant = cartItem.getVariant();
+        //For now, no purchase function
+        System.out.println("Purchase is currently not available. Please try again later");
+        return;
     }
 
     private static void changePassword(Customer customer) {
