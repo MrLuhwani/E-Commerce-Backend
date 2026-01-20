@@ -3,7 +3,9 @@ package dev.luhwani.app;
 import java.util.Objects;
 import java.util.Scanner;
 
+import dev.luhwani.app.applicationContext.AdminAppContext;
 import dev.luhwani.app.models.userModels.Admin;
+import dev.luhwani.app.repositories.AdminRepo;
 import dev.luhwani.app.services.adminServices.AdminProductService;
 import dev.luhwani.app.services.adminServices.AdminService;
 
@@ -11,10 +13,14 @@ public class AdminApp {
 
     private static final Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) throws Exception {
-        startApp();
+        AdminRepo adminRepo = new AdminRepo();
+        AdminService adminService = new AdminService(adminRepo);
+        AdminProductService adminProductService = new AdminProductService();
+        AdminAppContext adminAppContext = new AdminAppContext(adminService, adminProductService);
+        startApp(adminAppContext);
     }
 
-    private static void startApp() {
+    private static void startApp(AdminAppContext adminAppContext) {
         boolean running = true;
         while (running) {
             System.out.println("""
@@ -27,7 +33,7 @@ public class AdminApp {
             String response = scanner.nextLine().trim();
             switch (response) {
                 case "1" -> {
-                    Admin admin = AdminService.adminLogin();
+                    Admin admin = adminLogin(adminAppContext.getAdminService());
                     if (!Objects.isNull(admin)) {
                         menu(admin);
                     }
@@ -78,5 +84,34 @@ public class AdminApp {
                 default -> System.out.println("Invalid input");
             }
         }
+    }
+
+    private static Admin adminLogin(AdminService adminService) {
+        String workId;
+        Admin admin;
+        while (true) {
+            System.out.println("Enter your worker ID: ");
+            workId = scanner.nextLine().trim();
+            try {
+                if (adminService.getIdToAdminMap().containsKey(Integer.parseInt(workId))) {
+                    admin = adminService.getAdmin(Integer.parseInt(workId));
+                    break;
+                }
+                System.out.println("ID not found");
+                return null;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        String password;
+        System.out.println("Enter password: ");
+        password = scanner.nextLine();
+        if (adminService.getPassword(admin).equals(password)) {
+            return admin;
+        }
+        System.out.println("Invalid password!");
+        return null;
     }
 }

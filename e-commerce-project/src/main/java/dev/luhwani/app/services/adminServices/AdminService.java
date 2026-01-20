@@ -6,42 +6,31 @@ import java.util.Scanner;
 
 import dev.luhwani.app.models.userModels.Admin;
 import dev.luhwani.app.models.userModels.Staff;
+import dev.luhwani.app.repositories.AdminRepo;
 import dev.luhwani.app.services.Utils;
 
 public class AdminService {
 
+    private AdminRepo adminRepo;
+
+    public AdminService(AdminRepo adminRepo) {
+        this.adminRepo = adminRepo;
+    }
+
+    public Map<Integer, Admin> getIdToAdminMap() {
+        return adminRepo.getIdToAdminMap();
+    }
+
+    public Admin getAdmin(Integer id) {
+        return getIdToAdminMap().get(id);
+    }
     static Map<Integer, Admin> workIdToAdminMap = new HashMap<>();
     // this is a map containing the staffs alone, but not staffs that are admins
     static Map<Integer, Staff> workIdToStaffMap = new HashMap<>();
     static Scanner scanner = new Scanner(System.in);
 
-    public static Admin adminLogin() {
-        String workId;
-        Admin admin;
-        while (true) {
-            System.out.println("Enter your worker ID: ");
-            workId = scanner.nextLine().trim();
-            try {
-                if (workIdToAdminMap.containsKey(Integer.parseInt(workId))) {
-                    admin = workIdToAdminMap.get(Integer.parseInt(workId));
-                    break;
-                }
-                System.out.println("ID not found");
-                return null;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        String password;
-        System.out.println("Enter password: ");
-        password = scanner.nextLine();
-        if (admin.getPassword().equals(password)) {
-            return admin;
-        }
-        System.out.println("Invalid password!");
-        return null;
+    public String getPassword(Admin admin) {
+        return admin.getPassword();
     }
 
     public static Admin registerAdmin() {
