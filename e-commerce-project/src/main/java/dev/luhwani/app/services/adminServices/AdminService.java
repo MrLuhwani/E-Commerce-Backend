@@ -1,4 +1,4 @@
-package dev.luhwani.app.services;
+package dev.luhwani.app.services.adminServices;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import dev.luhwani.app.models.userModels.Admin;
 import dev.luhwani.app.models.userModels.Staff;
+import dev.luhwani.app.services.Utils;
 
 public class AdminService {
 

@@ -4,8 +4,8 @@ import java.util.Objects;
 import java.util.Scanner;
 
 import dev.luhwani.app.models.userModels.Admin;
-import dev.luhwani.app.services.AdminProductService;
-import dev.luhwani.app.services.AdminService;
+import dev.luhwani.app.services.adminServices.AdminProductService;
+import dev.luhwani.app.services.adminServices.AdminService;
 
 public class AdminApp {
 

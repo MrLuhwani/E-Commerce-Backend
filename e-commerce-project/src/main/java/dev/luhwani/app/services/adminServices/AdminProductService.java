@@ -1,4 +1,4 @@
-package dev.luhwani.app.services;
+package dev.luhwani.app.services.adminServices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,8 @@ import dev.luhwani.app.models.productModels.Category;
 import dev.luhwani.app.models.productModels.Product;
 import dev.luhwani.app.models.productModels.Variant;
 import dev.luhwani.app.models.userModels.Customer;
+import dev.luhwani.app.services.Utils;
+import dev.luhwani.app.services.userServices.ProductService;
 
 public class AdminProductService {
 

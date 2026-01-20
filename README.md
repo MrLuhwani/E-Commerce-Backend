@@ -26,8 +26,10 @@ Admin Services:
 ---
 
 ## Future Features
-- Persistence in App logic
+- Persistence in App logic using Postgresql
+- Usage of JDBC for proper encryptioning
 - Password Encryption
+- Integration of Spring boot
 ---
 
 ## Project Structure
@@ -39,6 +41,9 @@ ECommerceBackend/
 │   │        └── dev/  
 │   │            └── luhwani/  
 │   │                └── app/  
+│   │                    ├── applicationContext/  
+│   │                    │   └── AdminAppContext.java  
+│   │                    │   └── UserAppContext.java  
 │   │                    ├── models/  
 │   │                    │   ├─ cartModel/  
 │   │                    │   │    └── Cart.java  
@@ -55,26 +60,24 @@ ECommerceBackend/
 │   │                    │        └── UserModel.java  
 │   │                    ├── repositories/  
 │   │                    │   └── AdminRepo.java  
+│   │                    │   └── CartRepo.java  
 │   │                    │   └── CustomerRepo.java  
+│   │                    │   └── ProductRepo.java  
 │   │                    ├── services/  
-│   │                    │   └── AdminProductService.java  
-│   │                    │   └── AdminService.java  
-│   │                    │   └── CartService.java  
-│   │                    │   └── CustomerService.java  
-│   │                    │   └── ProductService.java  
-│   │                    │   └── Utils.java  
+│   │                    │   ├─ adminServices/  
+│   │                    │   │    └── AdminProductService.java  
+│   │                    │   │    └── AdminService.java  
+│   │                    │   ├─ userServices/  
+│   │                    │   │    └── CartService.java  
+│   │                    │   │    └── CustomerService.java  
+│   │                    │   │    └── ProductService.java  
+│   │                    │   └─ Utils.java
 │   │                    ├── AdminApp.java  
 │   │                    └── UserApp.java  
 │   ├── target/  
 │   └── pom.xml  
 ├── .gitignore  
 └── README.md  
-
-The workspace contains two folders by default, where:
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
 ---
 
 ## License

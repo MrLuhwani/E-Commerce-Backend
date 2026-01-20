@@ -10,9 +10,25 @@ import dev.luhwani.app.models.productModels.Product;
 
 public class ProductRepo {
     
-    public List<Category> categories = new ArrayList<>();
-    public List<Product> products = new ArrayList<>();
-    public Map<String, Category> nameToCategoryMap = new HashMap<>();
-    public Map<String, Product> nameToProductMap = new HashMap<>();
+    private List<Category> categories = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
+    private Map<String, Category> nameToCategoryMap = new HashMap<>();
+    private Map<String, Product> nameToProductMap = new HashMap<>();
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public Map<String, Category> getNameToCategoryMap() {
+        return nameToCategoryMap;
+    }
+    
+    public Map<String, Product> getNameToProductMap() {
+        return nameToProductMap;
+    }
 
 }

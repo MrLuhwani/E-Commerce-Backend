@@ -72,4 +72,20 @@ public class Utils {
         }
         return kobo.longValueExact();
     }
+
+    public static boolean validChoice(String choice, int size) {
+        int choiceInt = Integer.parseInt(choice);
+        try {
+            if (choiceInt > size || choiceInt < 1) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
