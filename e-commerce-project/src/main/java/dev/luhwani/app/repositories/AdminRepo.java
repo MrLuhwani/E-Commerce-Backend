@@ -15,7 +15,7 @@ public class AdminRepo {
         return workIdToAdminMap;
     }
 
-    public Map<Integer, Staff> idToStaffMap() {
+    public Map<Integer, Staff> getIdToStaffMap() {
         return workIdToStaffMap;
     }
 }

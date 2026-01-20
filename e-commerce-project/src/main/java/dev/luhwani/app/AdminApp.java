@@ -5,7 +5,9 @@ import java.util.Scanner;
 
 import dev.luhwani.app.applicationContext.AdminAppContext;
 import dev.luhwani.app.models.userModels.Admin;
+import dev.luhwani.app.models.userModels.Staff;
 import dev.luhwani.app.repositories.AdminRepo;
+import dev.luhwani.app.services.Utils;
 import dev.luhwani.app.services.adminServices.AdminProductService;
 import dev.luhwani.app.services.adminServices.AdminService;
 
@@ -39,7 +41,7 @@ public class AdminApp {
                     }
                 }
                 case "2" -> {
-                    Admin admin = AdminService.adminLogin();
+                    Admin admin = registerAdmin(adminAppContext.getAdminService());
                     if (!Objects.isNull(admin)) {
                         menu(admin);
                     }
@@ -109,9 +111,55 @@ public class AdminApp {
         System.out.println("Enter password: ");
         password = scanner.nextLine();
         if (adminService.getPassword(admin).equals(password)) {
+            System.out.println("Welcome " + adminService.getName(Integer.parseInt(workId)));
             return admin;
         }
         System.out.println("Invalid password!");
         return null;
+    }
+
+    private static Admin registerAdmin(AdminService adminService) {
+        String id;
+        int idInt;
+        Staff staff = null;
+        while (true) {
+            System.out.println("Enter your work ID: ");
+            id = scanner.nextLine().trim();
+            try {
+                idInt = Integer.parseInt(id);
+                if (adminService.getIdToAdminMap().containsKey(idInt)) {
+                    System.out.println("This Id is already an admin");
+                } else if (!adminService.getIdToStaffMap().containsKey(idInt)) {
+                    System.out.println("ID not found");
+                } else {
+                    staff = adminService.getStaff(idInt);
+                    break;
+                }
+                return null;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        String password;
+        while (true) {
+            System.out.println("""
+                    Set new Password:
+                    Password requirements:
+                    1.Between 7 - 20 characters long
+                    2.No space
+                    3.Contains both letters and numbers
+                    4.Contains at least one symbol""");
+            System.out.println("Response: ");
+            password = scanner.nextLine();   
+            if (Utils.validPassword(password)) {
+                break;
+            }
+            System.out.println("Invalid password");
+        }
+        adminService.registerAdmin(staff, password, idInt);
+        System.out.println("Welcome " + adminService.getName(idInt));
+        return adminService.getAdmin(idInt);
     }
 }
