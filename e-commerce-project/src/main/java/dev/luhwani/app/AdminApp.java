@@ -84,8 +84,8 @@ public class AdminApp {
                 case "2" -> addNewProduct(productService);
                 case "3" -> addProductVariant(productService);
                 case "4" -> changeProductPrice(productService);
-                case "5" -> AdminProductService.editProductStock();
-                case "6" -> AdminProductService.temporaryDeactivation();
+                case "5" -> editProductStock(productService);
+                case "6" -> temporaryDeactivation(productService);
                 case "7" -> AdminProductService.permanentDeactivation();
                 case "8" -> changePassword(admin);
                 case "9" -> {
@@ -314,6 +314,83 @@ public class AdminApp {
         long kobo = Utils.nairaStringToKobo(nairaString);
         variant.setKoboPrice(kobo);
         System.out.println("Price updated successfully");
+    }
+
+    private static void editProductStock(ProductService productService) {
+        Product product = getProductChoice(productService);
+        if (Objects.isNull(product)) {
+            return;
+        }
+        int count = 0;
+        for (Variant variant : product.getVariants()) {
+            count++;
+            System.out.println("product " + count + ".");
+            System.out.println("_____________");
+            variant.getDetails();
+        }
+        String choice = getVariantChoice(count);
+        Variant variant = product.getVariants().get(Integer.parseInt(choice) - 1);
+        boolean makingChoice = true;
+        while (makingChoice) {
+            System.out.println("""
+                    a.Increase stock
+                    b.Decrease stock""");
+            System.out.print("Enter the option of your response: ");
+            choice = scanner.nextLine().trim().toLowerCase();
+            switch (choice) {
+                case "a", "b" -> {
+                    makingChoice = false;
+                }
+                default -> System.out.println("Invalid input");
+            }
+        }
+        String stockChange;
+        while (true) {
+            System.out.print("Enter the amount of the stock change: ");
+            stockChange = scanner.nextLine().trim();
+            if (!stockChange.startsWith("-")) {
+                try {
+                    Integer.parseInt(stockChange);
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        int change = Integer.parseInt(stockChange);
+        int newStock = 0;
+        if (change < 0) {
+            System.out.println("Negatives not allowed");
+            return;
+        }
+        if (choice.equals("a")) {
+            newStock = variant.getStock() + change;
+            variant.setStock(newStock);
+        } else {
+            newStock = variant.getStock() - Integer.parseInt(stockChange);
+            variant.setStock(newStock);
+        }
+        System.out.println("Stock change successful");
+    }
+
+    private static void temporaryDeactivation(ProductService productService) {
+        Product product = getProductChoice(productService);
+        if (Objects.isNull(product)) {
+            return;
+        }
+        int count = 0;
+        for (Variant variant : product.getVariants()) {
+            count++;
+            System.out.println("product " + count + ".");
+            System.out.println("_____________");
+            variant.getDetails();
+        }
+        String choice = getVariantChoice(count);
+        Variant variant = product.getVariants().get(Integer.parseInt(choice) - 1);
+        variant.setIsActive(false);
+        System.out.println("Product is temporarily deactivated");
     }
 
     private static void changePassword(Admin admin) {
