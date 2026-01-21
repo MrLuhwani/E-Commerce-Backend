@@ -83,7 +83,7 @@ public class AdminApp {
                 case "1" -> addNewCategory(productService);
                 case "2" -> addNewProduct(productService);
                 case "3" -> addProductVariant(productService);
-                case "4" -> AdminProductService.changeProductPrice();
+                case "4" -> changeProductPrice(productService);
                 case "5" -> AdminProductService.editProductStock();
                 case "6" -> AdminProductService.temporaryDeactivation();
                 case "7" -> AdminProductService.permanentDeactivation();
@@ -243,17 +243,10 @@ public class AdminApp {
     }
 
     private static void addProductVariant(ProductService productService) {
-        String productName;
-        while (true) {
-            System.out.println("Enter product name: ");
-            productName = scanner.nextLine().trim().toLowerCase();
-            if (productService.getNameToProductMap().containsKey(productName)) {
-                break;
-            }
-            System.out.println("Product not found");
+        Product product = getProductChoice(productService);
+        if (Objects.isNull(productService)) {
             return;
         }
-        Product product =  productService.getNameToProductMap().get(productName);
         String variation;
         System.out.println("Enter variant features: ");
         variation = scanner.nextLine().trim();
@@ -289,6 +282,38 @@ public class AdminApp {
         productService.addNewVariant(product, priceInKobo, variation, Integer.parseInt(quantity));
         System.out.println("Product is already active");
         System.out.println("Deactivate product if needed in the menu section");
+    }
+    
+    private static void changeProductPrice(ProductService productService) {
+        Product product = getProductChoice(productService);
+        if (Objects.isNull(product)) {
+            return;
+        }
+        int count = 0;
+        for (Variant variant : product.getVariants()) {
+            count++;
+            System.out.println("product " + count + ".");
+            System.out.println("_____________");
+            variant.getDetails();
+        }
+        String choice = getVariantChoice(count);
+        Variant variant = product.getVariants().get(Integer.parseInt(choice) - 1);
+        String nairaString;
+        while (true) {
+            System.out.print("Enter the new price(₦): ");
+            nairaString = scanner.nextLine().trim();
+            try {
+                Double.parseDouble(nairaString);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        long kobo = Utils.nairaStringToKobo(nairaString);
+        variant.setKoboPrice(kobo);
+        System.out.println("Price updated successfully");
     }
 
     private static void changePassword(Admin admin) {
@@ -327,5 +352,39 @@ public class AdminApp {
             System.out.println("Password doesnt match");
         }
         admin.setPassword(newPassword);
+    }
+
+    private static Product getProductChoice(ProductService productService) {
+        String productName;
+        while (true) {
+            System.out.println("Enter product name: ");
+            productName = scanner.nextLine().trim().toLowerCase();
+            if (productService.getNameToProductMap().containsKey(productName)) {
+                break;
+            }
+            System.out.println("Product not found");
+            return null;
+        }
+        return productService.getNameToProductMap().get(productName);
+    }
+
+    private static String getVariantChoice(int count) {
+        String choice;
+        while (true) {
+            System.out.print("Enter the number for the variant: ");
+            choice = scanner.nextLine().trim().toLowerCase();
+            try {
+                if (Integer.parseInt(choice) > count || Integer.parseInt(choice) <= 0) {
+                    System.out.println("Invalid choice");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return choice;
     }
 }

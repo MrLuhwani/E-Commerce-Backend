@@ -43,10 +43,6 @@ public class AdminProductService {
 
     static Scanner scanner = new Scanner(System.in);
 
-    public static void addProductVariant() {
-        
-    }
-
     public static void editProductStock() {
         Product product = getProductChoice();
         if (Objects.isNull(product)) {
@@ -149,38 +145,6 @@ public class AdminProductService {
         //     }
         // }
         System.out.println("Product deleted successfully");
-    }
-
-    public static void changeProductPrice() {
-        Product product = getProductChoice();
-        if (Objects.isNull(product)) {
-            return;
-        }
-        int count = 0;
-        for (Variant variant : product.getVariants()) {
-            count++;
-            System.out.println("product " + count + ".");
-            System.out.println("_____________");
-            variant.getDetails();
-        }
-        String choice = getChoice(count);
-        Variant variant = product.getVariants().get(Integer.parseInt(choice) - 1);
-        String nairaString;
-        while (true) {
-            System.out.print("Enter the new price(₦): ");
-            nairaString = scanner.nextLine().trim();
-            try {
-                Double.parseDouble(nairaString);
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        long kobo = Utils.nairaStringToKobo(nairaString);
-        variant.setKoboPrice(kobo);
-        System.out.println("Price updated successfully");
     }
 
     private static Product getProductChoice() {
