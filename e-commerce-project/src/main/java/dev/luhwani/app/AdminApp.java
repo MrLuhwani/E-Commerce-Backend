@@ -2,9 +2,11 @@ package dev.luhwani.app;
 
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.Locale.Category;
+import java.util.regex.Pattern;
 
 import dev.luhwani.app.applicationContext.AdminAppContext;
-import dev.luhwani.app.models.productModels.Category;
+import dev.luhwani.app.models.productModels.Product;
 import dev.luhwani.app.models.userModels.Admin;
 import dev.luhwani.app.models.userModels.Staff;
 import dev.luhwani.app.repositories.AdminRepo;
@@ -78,7 +80,7 @@ public class AdminApp {
             response = scanner.nextLine().trim();
             switch (response) {
                 case "1" -> addNewCategory(adminAppContext.getProductService());
-                case "2" -> AdminProductService.addNewProduct();
+                case "2" -> addNewProduct(adminAppContext.getProductService());
                 case "3" -> AdminProductService.addProductVariant();
                 case "4" -> AdminProductService.changeProductPrice();
                 case "5" -> AdminProductService.editProductStock();
@@ -183,6 +185,60 @@ public class AdminApp {
         }
         productService.addNewCategory(name);
         System.out.println("Category successfully created");
+    }
+
+    private static void addNewProduct(ProductService productService) {
+        String name;
+        while (true) {
+            System.out.println("Enter product name: ");
+            name = scanner.nextLine().trim().toLowerCase();
+            if (productService.getNameToProductMap().containsKey(name)) {
+                System.out.println("This product already exists");
+                return;
+            } else {
+                break;
+            }
+        }
+        String description;
+        System.out.print("Enter product description: ");
+        description = scanner.nextLine().trim();
+        System.out.println("""
+                How to Register Products Categories
+                Example: 1.Jewelry 2.Tech 3.Accessory 4.Furniture
+                If the product belongs to furniture and accessory category
+                Your response: 3,4 (no space please)
+                """);
+        System.out.println("Available Product Categories:");
+        int count = 0;
+        for (String string : productService.getNameToCategoryMap().keySet()) {
+            System.out.println(count + "." + string);
+        }
+        String productCategories;
+        String[] categoriesArr = null;
+        while (true) {
+            boolean validCategories = true;
+            System.out.print("Enter product categories: ");
+            productCategories = scanner.nextLine().trim();
+            Pattern pattern = Pattern.compile("^\\d+(,\\d+)*$");
+            boolean validFormat = pattern.matcher(productCategories).matches();
+            if (validFormat) {
+                categoriesArr = productCategories.split(",");
+                for (String string : categoriesArr) {
+                    if (Integer.parseInt(string) > productService.getCategories().size()) {
+                        System.out.printf("%s is invalid\n", string);
+                        validCategories = false;
+                    }
+                }
+            } else {
+                validCategories = false;
+                System.out.println("Invalid input");
+            }
+            if (validCategories) {
+                break;
+            }
+        }
+        productService.addNewProduct(name, description, categoriesArr);
+        System.out.println("Product has successfuly been added to categories");
     }
 
     private static void changePassword(Admin admin) {

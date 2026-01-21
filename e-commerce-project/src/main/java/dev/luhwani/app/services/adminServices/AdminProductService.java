@@ -43,60 +43,6 @@ public class AdminProductService {
 
     static Scanner scanner = new Scanner(System.in);
 
-    public static void addNewProduct() {
-        String name;
-        while (true) {
-            System.out.println("Enter product name: ");
-            name = scanner.nextLine().trim().toLowerCase();
-            if (ProductService.productNameToObjectMap.containsKey(name)) {
-                System.out.println("This product already exists");
-                return;
-            } else {
-                break;
-            }
-        }
-        String description;
-        System.out.print("Enter product description: ");
-        description = scanner.nextLine().trim();
-        Product product = new Product(name, description);
-        System.out.println("""
-                How to Register Products Categories
-                Example: 1.Jewelry 2.Tech 3.Accessory 4.Furniture
-                If the product belongs to furniture and accessory category
-                Your response: 3,4
-                """);
-        System.out.println("Available Product Categories:");
-        ProductService.printCategories();
-        String productCategories;
-        String[] categoriesArr = null;
-        while (true) {
-            boolean validCategories = true;
-            System.out.print("Enter product categories: ");
-            productCategories = scanner.nextLine().trim();
-            Pattern pattern = Pattern.compile("^\\d+(,\\d+)*$");
-            boolean validFormat = pattern.matcher(productCategories).matches();
-            if (validFormat) {
-                categoriesArr = productCategories.split(",");
-                for (String string : categoriesArr) {
-                    if (Integer.parseInt(string) > ProductService.categories.size()) {
-                        System.out.printf("%s is invalid\n", string);
-                        validCategories = false;
-                    }
-                }
-            } else {
-                validCategories = false;
-                System.out.println("Invalid input");
-            }
-            if (validCategories) {
-                break;
-            }
-        }
-        for (String str : categoriesArr) {
-            ProductService.categories.get(Integer.parseInt(str) - 1).addProduct(product);
-        }
-        System.out.println("Product has successfuly been added to categories");
-    }
-
     public static void addProductVariant() {
         Product product = getProductChoice();
         if (Objects.isNull(product)) {

@@ -66,4 +66,13 @@ public class ProductService {
         getNameToCategoryMap().put(category.getName(), category);
     }
 
+    public void addNewProduct(String name, String description, String[] categories) {
+        Product product = new Product(name, description);
+        for (String str : categories) {
+            getCategories().get(Integer.parseInt(str) - 1).addProduct(product);
+        }
+        getProducts().add(product);
+        getNameToProductMap().put(name, product);
+    }
+
 }
