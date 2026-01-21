@@ -4,12 +4,15 @@ import java.util.Objects;
 import java.util.Scanner;
 
 import dev.luhwani.app.applicationContext.AdminAppContext;
+import dev.luhwani.app.models.productModels.Category;
 import dev.luhwani.app.models.userModels.Admin;
 import dev.luhwani.app.models.userModels.Staff;
 import dev.luhwani.app.repositories.AdminRepo;
+import dev.luhwani.app.repositories.ProductRepo;
 import dev.luhwani.app.services.Utils;
 import dev.luhwani.app.services.adminServices.AdminProductService;
 import dev.luhwani.app.services.adminServices.AdminService;
+import dev.luhwani.app.services.productServices.ProductService;
 
 public class AdminApp {
 
@@ -17,8 +20,9 @@ public class AdminApp {
     public static void main(String[] args) throws Exception {
         AdminRepo adminRepo = new AdminRepo();
         AdminService adminService = new AdminService(adminRepo);
-        AdminProductService adminProductService = new AdminProductService();
-        AdminAppContext adminAppContext = new AdminAppContext(adminService, adminProductService);
+        ProductRepo productRepo = new ProductRepo();
+        ProductService productService = new ProductService(productRepo);
+        AdminAppContext adminAppContext = new AdminAppContext(adminService, productService);
         startApp(adminAppContext);
     }
 
@@ -37,13 +41,13 @@ public class AdminApp {
                 case "1" -> {
                     Admin admin = adminLogin(adminAppContext.getAdminService());
                     if (!Objects.isNull(admin)) {
-                        menu(admin);
+                        menu(admin, adminAppContext);
                     }
                 }
                 case "2" -> {
                     Admin admin = registerAdmin(adminAppContext.getAdminService());
                     if (!Objects.isNull(admin)) {
-                        menu(admin);
+                        menu(admin, adminAppContext);
                     }
                 }
                 case "3" -> {
@@ -55,7 +59,7 @@ public class AdminApp {
         }
     }
 
-    private static void menu(Admin admin) {
+    private static void menu(Admin admin, AdminAppContext adminAppContext) {
         String response;
         boolean running = true;
         while (running) {
@@ -73,7 +77,7 @@ public class AdminApp {
             System.out.print("Response: ");
             response = scanner.nextLine().trim();
             switch (response) {
-                case "1" -> AdminProductService.addNewCategory();
+                case "1" -> addNewCategory(adminAppContext.getProductService());
                 case "2" -> AdminProductService.addNewProduct();
                 case "3" -> AdminProductService.addProductVariant();
                 case "4" -> AdminProductService.changeProductPrice();
@@ -163,6 +167,22 @@ public class AdminApp {
         adminService.registerAdmin(staff, password, idInt);
         System.out.println("Welcome " + adminService.getName(idInt));
         return adminService.getAdmin(idInt);
+    }
+
+    private static void addNewCategory(ProductService productService) {
+        String name;
+        while (true) {
+            System.out.println("Enter new category: ");
+            name = scanner.nextLine().trim().toLowerCase();
+            if (productService.getNameToCategoryMap().containsKey(name)) {
+                System.out.println("This category has already been created");
+                return;
+            } else {
+                break;
+            }
+        }
+        productService.addNewCategory(name);
+        System.out.println("Category successfully created");
     }
 
     private static void changePassword(Admin admin) {

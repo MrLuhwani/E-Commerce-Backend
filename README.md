@@ -67,10 +67,11 @@ ECommerceBackend/
 │   │                    │   ├─ adminServices/  
 │   │                    │   │    └── AdminProductService.java  
 │   │                    │   │    └── AdminService.java  
+│   │                    │   ├─ productServices/  
+│   │                    │   │    └── ProductService.java  
 │   │                    │   ├─ userServices/  
 │   │                    │   │    └── CartService.java  
 │   │                    │   │    └── CustomerService.java  
-│   │                    │   │    └── ProductService.java  
 │   │                    │   └─ Utils.java
 │   │                    ├── AdminApp.java  
 │   │                    └── UserApp.java  

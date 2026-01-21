@@ -10,12 +10,14 @@ import dev.luhwani.app.models.productModels.Category;
 import dev.luhwani.app.models.productModels.Product;
 import dev.luhwani.app.models.productModels.Variant;
 import dev.luhwani.app.models.userModels.Customer;
+import dev.luhwani.app.repositories.ProductRepo;
 import dev.luhwani.app.services.Utils;
-import dev.luhwani.app.services.userServices.ProductService;
+import dev.luhwani.app.services.productServices.ProductService;
 
 public class AdminProductService {
 
     static {
+        //run this in the admin app instead
         List<Variant> lowStockVariants = new ArrayList<>();
         
         for (Product product : ProductService.products) {
@@ -34,24 +36,12 @@ public class AdminProductService {
         }
     }
 
-    static Scanner scanner = new Scanner(System.in);
-
-    public static void addNewCategory() {
-        String name;
-        while (true) {
-            System.out.println("Enter new category: ");
-            name = scanner.nextLine().trim().toLowerCase();
-            if (ProductService.categoryNameToObjectMap.containsKey(name)) {
-                System.out.println("This category has already been created");
-                return;
-            } else {
-                break;
-            }
-        }
-        Category category = new Category(name);
-        ProductService.categories.add(category);
-        ProductService.categoryNameToObjectMap.put(category.getName(), category);
+    private ProductRepo productRepo;
+    public AdminProductService(ProductRepo productRepo) {
+        this.productRepo = productRepo;
     }
+
+    static Scanner scanner = new Scanner(System.in);
 
     public static void addNewProduct() {
         String name;

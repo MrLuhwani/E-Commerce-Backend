@@ -15,9 +15,9 @@ import dev.luhwani.app.repositories.CartRepo;
 import dev.luhwani.app.repositories.CustomerRepo;
 import dev.luhwani.app.repositories.ProductRepo;
 import dev.luhwani.app.services.Utils;
+import dev.luhwani.app.services.productServices.ProductService;
 import dev.luhwani.app.services.userServices.CartService;
 import dev.luhwani.app.services.userServices.CustomerService;
-import dev.luhwani.app.services.userServices.ProductService;
 
 public class UserApp {
     private static final Scanner scanner = new Scanner(System.in);

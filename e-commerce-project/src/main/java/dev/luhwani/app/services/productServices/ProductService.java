@@ -1,6 +1,5 @@
-package dev.luhwani.app.services.userServices;
+package dev.luhwani.app.services.productServices;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +58,12 @@ public class ProductService {
             }
         }
         return filteredProducts;
+    }
+
+    public void addNewCategory(String name) {
+        Category category = new Category(name);
+        getCategories().add(category);
+        getNameToCategoryMap().put(category.getName(), category);
     }
 
 }
