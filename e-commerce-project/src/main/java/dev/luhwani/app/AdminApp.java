@@ -68,7 +68,8 @@ public class AdminApp {
                     5.Edit product stock
                     6.Product temporary deactivation
                     7.Permanent product deletion
-                    8.Log Out""");
+                    8.Change Password
+                    9.Log Out""");
             System.out.print("Response: ");
             response = scanner.nextLine().trim();
             switch (response) {
@@ -79,7 +80,8 @@ public class AdminApp {
                 case "5" -> AdminProductService.editProductStock();
                 case "6" -> AdminProductService.temporaryDeactivation();
                 case "7" -> AdminProductService.permanentDeactivation();
-                case "8" -> {
+                case "8" -> changePassword(admin);
+                case "9" -> {
                     running = false;
                     System.out.println("Logging Out...");
                 }
@@ -161,5 +163,43 @@ public class AdminApp {
         adminService.registerAdmin(staff, password, idInt);
         System.out.println("Welcome " + adminService.getName(idInt));
         return adminService.getAdmin(idInt);
+    }
+
+    private static void changePassword(Admin admin) {
+        String oldPassword = admin.getPassword();
+        while (true) {
+            System.out.print("Enter your old password: ");
+            String input = scanner.nextLine();
+            if (input.equals(oldPassword)) {
+                break;
+            }
+            System.out.println("Invalid Password");
+        }
+        String newPassword;
+        while (true) {
+            System.out.println("""
+                    Set new Password:
+                    Password requirements:
+                    1.Between 7 - 20 characters long
+                    2.No space
+                    3.Contains both letters and numbers
+                    4.Contains at least one symbol""");
+            System.out.print("Response: ");
+            newPassword = scanner.nextLine();
+            if (Utils.validPassword(newPassword)) {
+                break;
+            }
+            System.out.println("Invalid Password");
+        }
+        String confirmPassword;
+        while (true) {
+            System.out.println("Confirm new password: ");
+            confirmPassword = scanner.nextLine();
+            if (newPassword.equals(confirmPassword)) {
+                break;
+            }
+            System.out.println("Password doesnt match");
+        }
+        admin.setPassword(newPassword);
     }
 }
