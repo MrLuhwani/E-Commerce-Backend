@@ -75,4 +75,9 @@ public class ProductService {
         getNameToProductMap().put(name, product);
     }
 
+    public void addNewVariant(Product product, long priceInKobo, String variation, Integer stock) {
+        Variant variant = new Variant(true, priceInKobo, variation, stock);
+        product.addVariant(variant);
+    }
+
 }

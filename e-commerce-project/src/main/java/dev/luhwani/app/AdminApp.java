@@ -2,11 +2,11 @@ package dev.luhwani.app;
 
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.Locale.Category;
 import java.util.regex.Pattern;
 
 import dev.luhwani.app.applicationContext.AdminAppContext;
 import dev.luhwani.app.models.productModels.Product;
+import dev.luhwani.app.models.productModels.Variant;
 import dev.luhwani.app.models.userModels.Admin;
 import dev.luhwani.app.models.userModels.Staff;
 import dev.luhwani.app.repositories.AdminRepo;
@@ -63,6 +63,7 @@ public class AdminApp {
 
     private static void menu(Admin admin, AdminAppContext adminAppContext) {
         String response;
+        ProductService productService = adminAppContext.getProductService();
         boolean running = true;
         while (running) {
             System.out.println("""
@@ -79,9 +80,9 @@ public class AdminApp {
             System.out.print("Response: ");
             response = scanner.nextLine().trim();
             switch (response) {
-                case "1" -> addNewCategory(adminAppContext.getProductService());
-                case "2" -> addNewProduct(adminAppContext.getProductService());
-                case "3" -> AdminProductService.addProductVariant();
+                case "1" -> addNewCategory(productService);
+                case "2" -> addNewProduct(productService);
+                case "3" -> addProductVariant(productService);
                 case "4" -> AdminProductService.changeProductPrice();
                 case "5" -> AdminProductService.editProductStock();
                 case "6" -> AdminProductService.temporaryDeactivation();
@@ -239,6 +240,55 @@ public class AdminApp {
         }
         productService.addNewProduct(name, description, categoriesArr);
         System.out.println("Product has successfuly been added to categories");
+    }
+
+    private static void addProductVariant(ProductService productService) {
+        String productName;
+        while (true) {
+            System.out.println("Enter product name: ");
+            productName = scanner.nextLine().trim().toLowerCase();
+            if (productService.getNameToProductMap().containsKey(productName)) {
+                break;
+            }
+            System.out.println("Product not found");
+            return;
+        }
+        Product product =  productService.getNameToProductMap().get(productName);
+        String variation;
+        System.out.println("Enter variant features: ");
+        variation = scanner.nextLine().trim();
+        String nairaString;
+        while (true) {
+            System.out.print("Enter price of product in naira: ");
+            nairaString = scanner.nextLine();
+            try {
+                Double.parseDouble(nairaString);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        long priceInKobo = Utils.nairaStringToKobo(nairaString);
+        String quantity;
+        while (true) {
+            System.out.print("Enter the stock quantity: ");
+            quantity = scanner.nextLine().trim();
+            if (!quantity.startsWith("-")) {
+                try {
+                    Integer.parseInt(quantity);
+                    break;
+                } catch (NumberFormatException e) {
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Invalid input");
+            }
+        }
+        productService.addNewVariant(product, priceInKobo, variation, Integer.parseInt(quantity));
+        System.out.println("Product is already active");
+        System.out.println("Deactivate product if needed in the menu section");
     }
 
     private static void changePassword(Admin admin) {

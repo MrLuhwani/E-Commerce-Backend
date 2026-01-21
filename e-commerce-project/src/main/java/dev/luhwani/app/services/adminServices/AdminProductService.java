@@ -44,29 +44,7 @@ public class AdminProductService {
     static Scanner scanner = new Scanner(System.in);
 
     public static void addProductVariant() {
-        Product product = getProductChoice();
-        if (Objects.isNull(product)) {
-            return;
-        }
-        String variation;
-        System.out.println("Enter variant features: ");
-        variation = scanner.nextLine().trim();
-        String nairaString;
-        while (true) {
-            System.out.print("Enter price of product in naira: ");
-            nairaString = scanner.nextLine();
-            try {
-                Double.parseDouble(nairaString);
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        long priceInKobo = Utils.nairaStringToKobo(nairaString);
-        Variant variant = new Variant(true, priceInKobo, variation, 0);
-        product.addVariant(variant);
+        
     }
 
     public static void editProductStock() {
@@ -115,7 +93,7 @@ public class AdminProductService {
         int change = Integer.parseInt(stockChange);
         int newStock = 0;
         if (change < 0) {
-            System.out.println("Megatives not allowed");
+            System.out.println("Negatives not allowed");
             return;
         }
         if (choice.equals("a")) {
